@@ -7,6 +7,9 @@ import math
 
 # Solutia mea - iau din biblioteca math si prin metoda sqrt fac radical
 # din (x2 - x1)^2 + (y2 - y1)^2
+# input: - x1, y1: coordonatele primului punct
+#        - x2, y2: coordonatele celui de-al doilea punct
+# output: - distanta: distanta euclidiana dintre cele doua puncte
 # COMPLEXITATE: Theta(1)
 def distanta_euclidiana(x1, y1, x2, y2):
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)

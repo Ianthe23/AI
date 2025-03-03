@@ -4,6 +4,8 @@ De ex. dacă n = 4, numerele sunt: 1, 10, 11, 100.
 """
 
 # Solutia mea - generez numerele de la 1 la n si le retin in lista numbers_bin
+# input - n: numarul pana la care se genereaza numerele
+# output - numbers_bin: lista cu numerele generate
 # COMPLEXITATE: Theta(n)
 def reprez_binom(n):
     numbers_bin = []

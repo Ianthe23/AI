@@ -4,6 +4,9 @@ cu n elemente (k < n). De ex. al 2-lea cel mai mare element din șirul [7,4,6,3,
 """
 
 # Solutia mea - sortez sirul si returnez elementul de pe pozitia n - k
+# input - sir: lista de numere
+#        - k: pozitia elementului
+# output - numar: al k-lea cel mai mare element
 # COMPLEXITATE: O(n log n)
 def k_element_mare(sir, k):
     return sorted(sir)[- k]

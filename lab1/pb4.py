@@ -7,6 +7,8 @@ sunt: 'mere' și 'rosii'.
 # Algoritmul meu - impart sirul in cuvinte si retin intr-un dictionar
 # de cate ori apare fiecare cuvant, iar apoi retin intr-o lista cuvintele
 # care apar o singura data
+# input - sir - sirul de caractere
+# output - cuvinte - lista cu cuvintele care apar o singura data
 # COMPLEXITATE: Theta(n)
 def cuvinte_unice(sir):
     words = sir.split()

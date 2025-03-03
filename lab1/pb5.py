@@ -6,6 +6,8 @@ care se repetă. De ex. în șirul [1,2,3,4,2] valoarea 2 apare de două ori.
 
 # Algoritmul meu - parcurg sirul si retin intr-un dictionar de cate ori apare
 # fiecare element, iar apoi returnez elementul care apare de doua ori
+# input - sir: lista de numere
+# output - numar: numarul care se repeta
 # COMPLEXITATE: Theta(n)
 def valoare_repetata(sir):
     dict = {}

@@ -4,6 +4,8 @@ pe linii, să se identifice indexul liniei care conține cele mai multe elemente
 """
 
 # Algoritmul meu - parcurg matricea si retin indexul liniei care contine cele mai multe elemente de 1
+# input - matrice: matricea de numere
+# output - numar: indexul liniei care contine cele mai multe elemente de 1
 # COMPLEXITATE: Theta(n * m)
 def linie_maxim(matrice):
     nr_linii = len(matrice)

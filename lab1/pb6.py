@@ -6,6 +6,8 @@ De ex. 2 este elementul majoritar în șirul [2,8,7,2,2,5,2,3,1,2,2].
 
 # Algoritmul meu - parcurg sirul cu elemente unice si verific daca numarul de aparitii
 # ale fiecarui element este mai mare decat n / 2
+# input - sir: lista de numere
+# output - numar: elementul majoritar
 # COMPLEXITATE: Theta(n)
 def element_majoritar(sir):
     sir_unic = list(set(sir))

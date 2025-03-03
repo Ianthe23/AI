@@ -5,6 +5,8 @@ toate aparițiile elementelor egale cu 0 care sunt complet înconjurate de 1.
 
 # Algoritmul meu - parcurg matricea si verific daca elementul curent este 0 si 
 # daca este complet inconjurat de 1
+# input - matrice: matricea de numere
+# output - matrice: matricea cu elementele inlocuite
 # COMPLEXITATE: Theta(n * m)
 
 def inlocuire(matrice):

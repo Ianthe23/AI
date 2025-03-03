@@ -8,6 +8,8 @@ De ex. produsul scalar a 2 vectori unisimensionali [1,0,2,0,3] și
 
 # Solutia mea - parcurg vectorii si inmultesc elementele de pe aceleasi pozitii
 # daca ambele elemente sunt nenule
+# input - v1, v2: vectorii rari
+# output - produs: produsul scalar al vectorilor
 # COMPLEXITATE: Theta(n)
 def produs_scalar_sparse(v1, v2):
     produs = 0

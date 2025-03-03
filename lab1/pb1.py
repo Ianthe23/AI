@@ -6,16 +6,12 @@ De ex. ultimul (dpdv alfabetic) cuvânt din ”Ana are mere rosii si galbene” 
 
 # Algoritmul meu - impart sirul in cuvinte si retin intr-o variabila 
 # acel cuvant care este mai mare alfabetic decat anteriorul
-# COMPLEXITATE: Theta(n)
+# input: - sir: sirul de caractere
+# output: - cuvant: ultimul cuvant alfabetic
+# COMPLEXITATE: O(nlogn)
 def ultim_cuvant(sir):
-    last_word = ""
-    words = sir.split()
-
-    for word in words:
-        if word > last_word:
-            last_word = word
-
-    return last_word
+    words = sorted(sir.split(), reverse=True)
+    return words[0]
 
 # Tests
 print("Teste la algoritmul meu:")
@@ -26,7 +22,7 @@ print("")
 #-----------------------------------------------------------------------------------------------------------------------
 
 # Algoritmul copilotului:
-# COMPLEXITATE: Theta(n)
+# COMPLEXITATE: O(nlogn)
 def ultim_cuvant_copilot(sir):
     return sorted(sir.split())[-1]
 

@@ -6,6 +6,9 @@ să se calculeze suma elementelor din sub-matricile identificate de fieare perec
 
 # Algoritmul meu - parcurg lista de perechi si pentru fiecare pereche
 # calculez suma elementelor din submatricea respectiva
+# input - matrice: matricea de numere
+#        - perechi: lista de perechi de coordonate
+# output - lista de numere: suma elementelor din submatrici
 # COMPLEXITATE: O(n * m * p)
 def suma_submatrici(matrice, perechi):
     rezultat = []
