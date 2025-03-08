@@ -7,8 +7,8 @@ sunt: 'mere' și 'rosii'.
 # Algoritmul meu - impart sirul in cuvinte si retin intr-un dictionar
 # de cate ori apare fiecare cuvant, iar apoi retin intr-o lista cuvintele
 # care apar o singura data
-# input - sir - sirul de caractere
-# output - cuvinte - lista cu cuvintele care apar o singura data
+# input - sir - string, sirul de caractere
+# output - cuvinte - string[] ista cu cuvintele care apar o singura data
 # COMPLEXITATE: Theta(n)
 def cuvinte_unice(sir):
     words = sir.split()
@@ -24,9 +24,11 @@ def cuvinte_unice(sir):
 
 # Tests
 print("Teste la algoritmul meu:")
-print(cuvinte_unice("ana are ana are mere rosii ana"))
-print(cuvinte_unice("ana are ana are mere rosii ana ana"))
-print("")
+def test():
+    assert cuvinte_unice("ana are ana are mere rosii ana") == ["mere", "rosii"]
+    assert cuvinte_unice("ana are ana are mere rosii ana ana") == ["mere", "rosii"]
+
+test()
 
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -38,8 +40,11 @@ def cuvinte_unice_copilot(sir):
 
 # Tests
 print("Teste la algoritmul copilotului:")
-print(cuvinte_unice_copilot("ana are ana are mere rosii ana"))
-print(cuvinte_unice_copilot("ana are ana are mere rosii ana ana"))
+def test_copilot():
+    assert cuvinte_unice_copilot("ana are ana are mere rosii ana") == ["mere", "rosii"]
+    assert cuvinte_unice_copilot("ana are ana are mere rosii ana ana") == ["mere", "rosii"]
+
+test_copilot()
 
 # Concluzie: Algoritmul copilotului este mai simplu si mai elegant, folosind
 # functia count() care returneaza de cate ori apare un cuvant in lista words.

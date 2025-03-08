@@ -21,8 +21,12 @@ def linie_maxim(matrice):
 
 # Tests
 print("Pentru algoritmul meu:")
-print(linie_maxim([[0, 0, 1], [0, 1, 1], [1, 1, 1]]))
-print("")
+def test():
+    assert linie_maxim([[0, 0, 1], [0, 1, 1], [1, 1, 1]]) == 2
+    assert linie_maxim([[0, 0, 0], [0, 0, 0], [0, 0, 0]]) == -1
+
+test()
+
 
 #---------------------------------------------------------------------------------------
 
@@ -35,7 +39,12 @@ def linie_maxim_copilot(matrice):
 
 # Tests
 print("Pentru algoritmul copilotului:")
-print(linie_maxim_copilot([[0, 0, 1], [0, 1, 1], [1, 1, 1]]))
+def test_copilot():
+    assert linie_maxim_copilot([[0, 0, 1], [0, 1, 1], [1, 1, 1]]) == 2
+    assert linie_maxim_copilot([[0, 0, 0], [0, 0, 0], [0, 0, 0]]) == 0
+
+test_copilot()
+
 
 # Concluzie: Algoritmul copilotului este mai simplu si mai elegant, folosind
 # functia sum() care calculeaza suma elementelor de pe fiecare linie a matricei.

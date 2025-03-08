@@ -25,10 +25,14 @@ def suma_submatrici(matrice, perechi):
         
     return rezultat
 
-# Tests
+#Tests
 print("Pentru algoritmul meu:")
-print(suma_submatrici([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [(0, 0, 1, 1), (1, 1, 2, 2)]))
-print("")
+def test():
+    assert suma_submatrici([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [(0, 0, 1, 1), (1, 1, 2, 2)]) == [12, 28]
+    assert suma_submatrici([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [(0, 0, 2, 2)]) == [45]
+
+test()
+
 
 #---------------------------------------------------------------------------------------
 
@@ -39,7 +43,11 @@ def suma_submatrici_copilot(matrice, perechi):
 
 # Tests
 print("Pentru algoritmul copilotului:")
-print(suma_submatrici_copilot([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [(0, 0, 1, 1), (1, 1, 2, 2)]))
+def test_copilot():
+    assert suma_submatrici_copilot([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [(0, 0, 1, 1), (1, 1, 2, 2)]) == [12, 28]
+    assert suma_submatrici_copilot([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [(0, 0, 2, 2)]) == [45]
+
+test_copilot()
 
 # Concluzie: Algoritmul copilotului este mai simplu si mai elegant, folosind
 # o lista de comprensie care calculeaza suma elementelor din submatricea

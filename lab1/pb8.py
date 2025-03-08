@@ -26,10 +26,11 @@ def main(n):
 # Tests
 
 print("Teste la algoritmul meu:")
-main(4)
-print("")
-main(10)
-print("")
+def test():
+    assert reprez_binom(4) == ['0b1', '0b10', '0b11', '0b100']
+    assert reprez_binom(10) == ['0b1', '0b10', '0b11', '0b100', '0b101', '0b110', '0b111', '0b1000', '0b1001', '0b1010']
+
+test()
 
 #---------------------------------------------------------------------------------------
 
@@ -44,10 +45,11 @@ def main_copilot(n):
 
 # Tests
 print("Teste la algoritmul copilotului:")
-main_copilot(4)
-print("")
-main_copilot(10)
-print("")
+def test_copilot():
+    assert reprez_binom_copilot(4) == ['0b1', '0b10', '0b11', '0b100']
+    assert reprez_binom_copilot(10) == ['0b1', '0b10', '0b11', '0b100', '0b101', '0b110', '0b111', '0b1000', '0b1001', '0b1010']
+
+test_copilot()
 
 # Concluzie: Algoritmul copilotului este mai simplu si mai elegant, folosind
 # functia bin() care returneaza reprezentarea binara a unui numar. Dar din punct

@@ -23,23 +23,12 @@ def inlocuire(matrice):
 
 # Tests
 print("Pentru algoritmul meu:")
-print("Matricea initiala: ")
-print([[1, 1, 1], [1, 0, 1], [1, 1, 1]])
-print("Matricea finala: ")
-print(inlocuire([[1, 1, 1], [1, 0, 1], [1, 1, 1]]))
-print("")
+def test():
+    assert inlocuire([[1, 1, 1], [1, 0, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+    assert inlocuire([[1, 1, 1], [1, 0, 1], [1, 0, 1]]) == [[1, 1, 1], [1, 0, 1], [1, 0, 1]]
+    assert inlocuire([[1, 1, 1], [0, 0, 0], [1, 1, 1]]) == [[1, 1, 1], [0, 0, 0], [1, 1, 1]]
 
-print("Matricea initiala: ")
-print([[1, 1, 1], [1, 0, 1], [1, 0, 1]])
-print("Matricea finala: ")
-print(inlocuire([[1, 1, 1], [1, 0, 1], [1, 0, 1]]))
-print("")
-
-print("Matricea initiala: ")
-print([[1, 1, 1], [0, 0, 0], [1, 1, 1]])
-print("Matricea finala: ")
-print(inlocuire([[1, 1, 1], [0, 0, 0], [1, 1, 1]]))
-print("")
+test()
 
 #---------------------------------------------------------------------------------------
 
@@ -60,22 +49,12 @@ def inlocuire_copilot(matrice):
 
 # Tests
 print("Pentru algoritmul copilotului:")
-print("Matricea initiala: ")
-print([[1, 1, 1], [1, 0, 1], [1, 1, 1]])
-print("Matricea finala: ")
-print(inlocuire_copilot([[1, 1, 1], [1, 0, 1], [1, 1, 1]]))
-print("")
+def test_copilot():
+    assert inlocuire_copilot([[1, 1, 1], [1, 0, 1], [1, 1, 1]]) == [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+    assert inlocuire_copilot([[1, 1, 1], [1, 0, 1], [1, 0, 1]]) == [[1, 1, 1], [1, 0, 1], [1, 0, 1]]
+    assert inlocuire_copilot([[1, 1, 1], [0, 0, 0], [1, 1, 1]]) == [[1, 1, 1], [0, 0, 0], [1, 1, 1]]
 
-print("Matricea initiala: ")
-print([[1, 1, 1], [1, 0, 1], [1, 0, 1]])
-print("Matricea finala: ")
-print(inlocuire_copilot([[1, 1, 1], [1, 0, 1], [1, 0, 1]]))
-print("")
-
-print("Matricea initiala: ")
-print([[1, 1, 1], [0, 0, 0], [1, 1, 1]])
-print("Matricea finala: ")
-print(inlocuire_copilot([[1, 1, 1], [0, 0, 0], [1, 1, 1]]))
+test_copilot()
 
 # Concluzie: Algoritmul copilotului este mai simplu si mai elegant, folosind
 # functia all() care verifica daca toate elementele dintr-un iterator sunt adevarate.

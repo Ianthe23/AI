@@ -8,8 +8,8 @@ De ex. produsul scalar a 2 vectori unisimensionali [1,0,2,0,3] și
 
 # Solutia mea - parcurg vectorii si inmultesc elementele de pe aceleasi pozitii
 # daca ambele elemente sunt nenule
-# input - v1, v2: vectorii rari
-# output - produs: produsul scalar al vectorilor
+# input - v1, v2: int, int, vectorii rari
+# output - produs: int, produsul scalar al vectorilor
 # COMPLEXITATE: Theta(n)
 def produs_scalar_sparse(v1, v2):
     produs = 0
@@ -25,9 +25,11 @@ def produs_scalar_sparse(v1, v2):
 
 # Tests
 print("Teste la algoritmul meu:")
-print(produs_scalar_sparse([1,0,2,0,3], [1,2,0,3,1]))
-print(produs_scalar_sparse([1,2,3], [4,5,6]))                       
-print("")
+def test():
+    assert produs_scalar_sparse([1,0,2,0,3], [1,2,0,3,1]) == 4
+    assert produs_scalar_sparse([1,2,3], [4,5,6]) == 32
+
+test()
 
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -38,8 +40,11 @@ def produs_scalar_sparse_copilot(v1, v2):
 
 # Tests
 print("Teste la algoritmul copilotului:")
-print(produs_scalar_sparse_copilot([1,0,2,0,3], [1,2,0,3,1]))
-print(produs_scalar_sparse_copilot([1,2,3], [4,5,6]))
+def test_copilot():
+    assert produs_scalar_sparse_copilot([1,0,2,0,3], [1,2,0,3,1]) == 4
+    assert produs_scalar_sparse_copilot([1,2,3], [4,5,6]) == 32
+
+test_copilot()
 
 # Concluzie: Algoritmul copilotului este mai simplu si mai elegant, folosind
 # functia zip() care returneaza o lista de tupluri, unde primul element din fiecare tuplu

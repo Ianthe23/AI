@@ -12,9 +12,13 @@ def k_element_mare(sir, k):
     return sorted(sir)[- k]
 
 # Tests
-print(k_element_mare([7,4,6,3,9,1], 2))
-print(k_element_mare([7,4,6,3,9,1], 1))
-print(k_element_mare([7,4,6,3,9,1], 3))
+print("Pentru algoritmul meu:")
+def test():
+    assert k_element_mare([7,4,6,3,9,1], 2) == 7
+    assert k_element_mare([7,4,6,3,9,1], 1) == 9
+    assert k_element_mare([7,4,6,3,9,1], 3) == 6
+
+test()
 
 #---------------------------------------------------------------------------------------
 
@@ -25,8 +29,12 @@ def k_element_mare_copilot(sir, k):
     return sir[- k]
 
 # Tests
-print(k_element_mare_copilot([7,4,6,3,9,1], 2))
-print(k_element_mare_copilot([7,4,6,3,9,1], 1))
-print(k_element_mare_copilot([7,4,6,3,9,1], 3))
+print("Pentru algoritmul copilotului:")
+def test_copilot():
+    assert k_element_mare_copilot([7,4,6,3,9,1], 2) == 7
+    assert k_element_mare_copilot([7,4,6,3,9,1], 1) == 9
+    assert k_element_mare_copilot([7,4,6,3,9,1], 3) == 6
+
+test_copilot()
 
 # Concluzie: Ambii algoritmi au aceeasi complexitate.

@@ -29,8 +29,11 @@ def main(sir):
 
 # Tests
 print("Pentru algoritmul meu:")
-main([2,8,7,2,2,5,2,3,1,2,2])
-print("")
+def test():
+    assert element_majoritar([2,8,7,2,2,5,2,3,1,2,2]) == 2
+    assert element_majoritar([1,2,3,4,5]) == -1
+
+test()
 
 #---------------------------------------------------------------------------------------
 
@@ -55,7 +58,11 @@ def main_copilot(sir):
 
 # Tests
 print("Pentru algoritmul copilotului:")
-main_copilot([2,8,7,2,2,5,2,3,1,2,2])
+def test_copilot():
+    assert element_majoritar_copilot([2,8,7,2,2,5,2,3,1,2,2]) == 2
+    assert element_majoritar_copilot([1,2,3,4,5]) == -1
+
+test_copilot()
 
 # Concluzie: Algoritmul copilotului este mai simplu si mai elegant, folosind
 # functia count() care returneaza de cate ori apare un element in lista sir.

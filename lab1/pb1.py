@@ -6,8 +6,8 @@ De ex. ultimul (dpdv alfabetic) cuvânt din ”Ana are mere rosii si galbene” 
 
 # Algoritmul meu - impart sirul in cuvinte si retin intr-o variabila 
 # acel cuvant care este mai mare alfabetic decat anteriorul
-# input: - sir: sirul de caractere
-# output: - cuvant: ultimul cuvant alfabetic
+# input: - sir: string, sirul de caractere
+# output: - cuvant: string, ultimul cuvant alfabetic
 # COMPLEXITATE: O(nlogn)
 def ultim_cuvant(sir):
     words = sorted(sir.split(), reverse=True)
@@ -15,9 +15,11 @@ def ultim_cuvant(sir):
 
 # Tests
 print("Teste la algoritmul meu:")
-print(ultim_cuvant("apple banana cherry date"))
-print(ultim_cuvant("Ana are mere rosii si galbene"))
-print("")
+def test():
+    assert ultim_cuvant("apple banana cherry date") == "date"
+    assert ultim_cuvant("Ana are mere rosii si galbene") == "si"
+
+test()
 
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -28,8 +30,11 @@ def ultim_cuvant_copilot(sir):
 
 # Tests
 print("Teste la algoritmul copilotului:")
-print(ultim_cuvant_copilot("apple banana cherry date"))
-print(ultim_cuvant_copilot("Ana are mere rosii si galbene"))
+def test_copilot():
+    assert ultim_cuvant_copilot("apple banana cherry date") == "date"
+    assert ultim_cuvant_copilot("Ana are mere rosii si galbene") == "si"
+
+test_copilot()
 
 # Concluzie: Ambii algoritmi au aceeasi complexitate, dar algoritmul copilotului
 # este mai simplu si mai elegant, folosind functia sorted() care sorteaza cuvintele
