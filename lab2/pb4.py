@@ -9,6 +9,53 @@ import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 nltk.download('punkt')
 
+def load_data(filename):
+    if not os.path.isfile(filename):
+        print(f"File {filename} not found.")
+        return None
+    return pd.read_csv(filename)
+
+# Load data
+filename = 'surveyDataSience.csv'
+df = load_data(filename)
+
+# Transformarea vechimii în programare în ani (media intervalului)
+df['years_in_programming'] = None
+for i in range(len(df)):
+    if pd.isna(df['Q6'][i]):
+        continue
+    if 'years' in df['Q6'][i]:
+        if '-' in df['Q6'][i]:
+            start, end = df['Q6'][i].replace(' years', '').split('-')
+            middle = (int(start) + int(end)) / 2
+            df['years_in_programming'][i] = middle
+        elif '+' in df['Q6'][i]:
+            start = df['Q6'][i].replace(' years', '').replace('+', '')
+            df['years_in_programming'][i] = int(start) + 5  # Estimare
+        elif '<' in df['Q6'][i]:
+            df['years_in_programming'][i] = 0.5  # Pentru <1 an
+
+# 1. Min-Max Scaling pentru durata studiilor și vechimea în programare
+scaler = MinMaxScaler()
+
+# Normalizarea anilor de studii
+df['normalized_years_of_studies'] = scaler.fit_transform(df[['years_in_programming']])
+
+# 2. Z-score standardization pentru durata studiilor și vechimea în programare
+scaler = StandardScaler()
+
+# Normalizarea anilor de studii
+df['standardized_years_of_studies'] = scaler.fit_transform(df[['years_in_programming']])
+
+# 3. Aplicarea pe durata studiilor universitare
+# Inlocuirea valorilor de studii în ani
+df['normalized_years_of_studies'] = df['years_in_programming']
+
+# Print pentru a verifica rezultatele
+print(df[['years_in_programming', 'normalized_years_of_studies', 'standardized_years_of_studies']].head())
+
+#----------------------------------------------
+
 # 2. Normalize pixel values in images
 def normalize_images(image_folder):
     image_files = [f for f in os.listdir(image_folder) if f.endswith(('png', 'jpg', 'jpeg'))]
@@ -25,6 +72,8 @@ def normalize_images(image_folder):
         plt.imshow(img_normalized, cmap='gray')
         plt.title("Normalized")
         plt.show()
+
+#----------------------------------------------
 
 # 3. Normalize word frequencies in text
 def normalize_text(text_file):
