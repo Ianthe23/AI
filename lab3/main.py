@@ -1,16 +1,8 @@
 from azure.cognitiveservices.vision.computervision import ComputerVisionClient
 from azure.cognitiveservices.vision.computervision.models import OperationStatusCodes
-from azure.cognitiveservices.vision.computervision.models import VisualFeatureTypes
 from msrest.authentication import CognitiveServicesCredentials
-from array import array
-import os
-from PIL import Image
-import sys
 import time
 import pytesseract
-import Levenshtein
-from difflib import SequenceMatcher
-import numpy as np
 import cv2
 import io
 
@@ -151,12 +143,6 @@ END - Authenticate
 image_path = "images/test2.jpeg"
 original_image = cv2.imread(image_path)
 processed_image = process_image_for_ocr(image_path)
-
-# Display images
-cv2.imshow('Original Image', original_image)
-cv2.imshow('Processed Image', processed_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
 
 # Ground truth data
 groundTruth = ["Succes in rezolvarea", "tEMELOR la", "LABORAtoaree de", "Inteligenta Artificiala!"]
