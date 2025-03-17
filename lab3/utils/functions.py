@@ -2,14 +2,15 @@ import Levenshtein
 from difflib import SequenceMatcher
 import numpy as np
 import cv2
-from PIL import Image, ImageEnhance
-import math
+import os
 
 # -------------------------- FUNCTIONS --------------------------
 def hamming_distance(s1, s2):
     """Calculate the Hamming distance between two strings"""
     if len(s1) != len(s2):
         return len(s1) if len(s2) == 0 else len(s2) if len(s1) == 0 else max(len(s1), len(s2))
+    
+    
     return sum(c1 != c2 for c1, c2 in zip(s1, s2))
 
 def evaluate_text_similarity(predicted_text, ground_truth, level='word'):
@@ -25,7 +26,7 @@ def evaluate_text_similarity(predicted_text, ground_truth, level='word'):
         truth_tokens = list(ground_truth)
     
     # Calculate various distances
-    levenshtein_dist = Levenshtein.distance(predicted_text, ground_truth)
+    levenshtein_dist = Levenshtein.distance(predicted_text, ground_truth) 
     jaro_winkler_sim = Levenshtein.jaro_winkler(predicted_text, ground_truth)
     hamming_dist = hamming_distance(predicted_text, ground_truth)
     
@@ -227,42 +228,65 @@ def process_image_for_ocr(image_path):
     img = cv2.imread(image_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # removing shadows
-    dilated_img = cv2.dilate(gray, np.ones((7, 7), np.uint8))
-    bg_img = cv2.medianBlur(dilated_img, 21)
-    diff_img = 255 - cv2.absdiff(gray, bg_img)
+    # Normalize image size (resize if too large or small)
+    height, width = gray.shape
+    max_dimension = 2000
+    if max(height, width) > max_dimension:
+        scale = max_dimension / max(height, width)
+        gray = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
 
-    # thresholding
-    _, thresh_img = cv2.threshold(diff_img, 10, 255, cv2.THRESH_BINARY)
+    # Normalize pixel values to [0, 255]
+    gray = cv2.normalize(gray, None, 0, 255, cv2.NORM_MINMAX)
 
-    # noise removal
-    kernel = np.ones((1, 1), np.uint8)
-    opening = cv2.morphologyEx(thresh_img, cv2.MORPH_OPEN, kernel, iterations=2)
+    # # Apply Gaussian blur to reduce noise before thresholding
+    # blurred = cv2.GaussianBlur(gray, (3,3), 0)
 
-    # sure background area
-    sure_bg = cv2.dilate(opening, kernel, iterations=3)
+    binary = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
 
-    # Finding sure foreground area
-    dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, 5)
-    _, sure_fg = cv2.threshold(dist_transform, 0.7 * dist_transform.max(), 255, 0)
+    # # Denoise using Non-Local Means Denoising
+    # denoised = cv2.fastNlMeansDenoising(binary, None, 10, 7, 21)
 
-    # Finding unknown region
-    sure_fg = np.uint8(sure_fg)
-    unknown = cv2.subtract(sure_bg, sure_fg)
+    # # Enhance contrast using CLAHE
+    # clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    # enhanced = clahe.apply(gray)
 
-    # Marker labelling
-    ret, markers = cv2.connectedComponents(sure_fg)
+    # # Deskew
+    # coords = np.column_stack(np.where(enhanced > 0))
+    # if len(coords) > 0:  # Check if there are any non-zero points
+    #     angle = cv2.minAreaRect(coords)[-1]
+    #     if angle < -45:
+    #         angle = 90 + angle
+    #     center = (enhanced.shape[1] // 2, enhanced.shape[0] // 2)
+    #     M = cv2.getRotationMatrix2D(center, angle, 1.0)
+    #     rotated = cv2.warpAffine(
+    #         enhanced,
+    #         M,
+    #         (enhanced.shape[1], enhanced.shape[0]),
+    #         flags=cv2.INTER_CUBIC,
+    #         borderMode=cv2.BORDER_REPLICATE
+    #     )
+    # else:
+    #     rotated = enhanced
 
-    # Add one to all labels so that sure background is not 0, but 1
-    markers = markers + 1
+    # Final normalization
+    rotated = cv2.normalize(binary, None, 0, 255, cv2.NORM_MINMAX)
 
-    # Now, mark the region of unknown with zero
-    markers[unknown == 255] = 0
+    # Convert back to BGR for display
+    processed_image = cv2.cvtColor(rotated, cv2.COLOR_GRAY2BGR)
 
-    # Apply watershed
-    markers = cv2.watershed(img, markers)
-    processed_image = img.copy()
-    processed_image[markers == -1] = [0, 0, 255]
+    # Save intermediate results for visualization
+    output_dir = "images/processed"
+    os.makedirs(output_dir, exist_ok=True)
+    
+    base_name = os.path.splitext(os.path.basename(image_path))[0]
+    cv2.imwrite(f"{output_dir}/{base_name}_gray.jpg", gray)
+    cv2.imwrite(f"{output_dir}/{base_name}_binary.jpg", binary)
+    # cv2.imwrite(f"{output_dir}/{base_name}_denoised.jpg", denoised)
+    # cv2.imwrite(f"{output_dir}/{base_name}_enhanced.jpg", enhanced)
+    cv2.imwrite(f"{output_dir}/{base_name}_rotated.jpg", rotated)
+    cv2.imwrite(f"{output_dir}/{base_name}_final.jpg", processed_image)
 
     return processed_image
+
+
     

@@ -26,6 +26,7 @@ def evaluate_image(image, ground_truth_text, ground_truth_boxes, name=""):
         raw=True
     )
     
+    # Get the operation ID from the response headers
     operation_id = read_response.headers['Operation-Location'].split('/')[-1]
     while True:
         read_result = computervision_client.get_read_result(operation_id)
