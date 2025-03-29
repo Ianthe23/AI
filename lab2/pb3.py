@@ -19,15 +19,23 @@ num_sentences = len(sentences)
 # 2. Count the number of words
 words = word_tokenize(text)
 words = [word for word in words if word.isalnum()]  # Remove punctuation
+words = [word for word in words if not word.isdigit()]  # Remove digits
 num_words = len(words)
 
 # 3. Count the number of unique words
 unique_words = set(words)
 num_unique_words = len(unique_words)
 
-# 4. Find the shortest and longest words
+# 4. Find the shortest and longest words (eliminate punctuation and digits)
 shortest_word = min(unique_words, key=len)
 longest_word = max(unique_words, key=len)
+
+# Ensure longest_word exists in WordNet, else find a close match
+if not wordnet.synsets(longest_word):
+    for word in sorted(unique_words, key=len, reverse=True):  # Check words by length
+        if wordnet.synsets(word):
+            longest_word = word
+            break  # Stop once a valid word is found
 
 # 5. Remove diacritics from text
 text_no_diacritics = unidecode(text)

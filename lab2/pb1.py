@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import csv
 import os
+import warnings
+warnings.simplefilter(action='ignore', category=pd.errors.SettingWithCopyWarning)
 
 def load_data(filename):
     if not os.path.isfile(filename):
@@ -24,10 +26,15 @@ if df is not None:
     # Print row 1
     print(df.iloc[0].T)
 
+    print('-----------------------------------')
+
 
     # 1. Number of respondents
-    num_respondents = len(df)
+    # Eliminate the first row
+    num_respondents = len(df) - 1
     print(f"Number of respondents: {num_respondents}")
+
+    print("-----------------------------------")
 
     # 2. Number and type of information (columns)
     num_columns = len(df.columns)
@@ -36,11 +43,17 @@ if df is not None:
     print("Column types:")
     print(column_types)
 
+    print("-----------------------------------")
+
+
 
     # 3. Number of respondents with complete data (no missing values)
     complete_data = df.dropna()
     num_complete_respondents = len(complete_data)
     print(f"Number of respondents with complete data: {num_complete_respondents}")
+
+    print("-----------------------------------")
+
 
     # 4. Calculate the average years of higher education for respondents with complete data
     # Assuming 'years_of_studies' is the column for the years of studies in the dataset
@@ -58,6 +71,8 @@ if df is not None:
     average_years = average_years / num_respondents
     print(f"Average years of higher education for respondents: {average_years}")
 
+    print("-----------------------------------")
+
     average_years_Romania = 0
     for index, row in df.iloc[1:].iterrows():
         sum = 0
@@ -70,6 +85,8 @@ if df is not None:
         average_years_Romania += sum
     average_years_Romania = average_years_Romania / num_respondents
     print(f"Average years of higher education for respondents from Romania: {average_years_Romania}")
+
+    print("-----------------------------------")
 
     average_years_Romania_women = 0
     for index, row in df.iloc[1:].iterrows():
@@ -84,6 +101,8 @@ if df is not None:
     average_years_Romania_women = average_years_Romania_women / num_respondents
     print(f"Average years of higher education for Romanian women is: {average_years_Romania_women}")
 
+    print("-----------------------------------")
+
     # 5. Number of women respondents from Romania who have complete data
     # Filter for Romanian women
     mask = (df['Q3'] == "Romania") & (df['Q2'] == "Woman")
@@ -96,11 +115,15 @@ if df is not None:
 
     print(f"Number of women respondents from Romania with complete data: {number_women_complete_data}")
 
+    print("-----------------------------------")
+
 
     # 6. Number of woman respondents from Romania who code in Pyhton
     # Filter for Romanian women
     mask = (df['Q3'] == "Romania") & (df['Q2'] == "Woman") & (df['Q7_Part_1'] == "Python")
     print(f"Number of woman reposndents from Romania who code in Python: {df[mask].shape[0]}")
+
+    print("-----------------------------------")
 
     mask_all = (df['Q2'] == "Woman") & (df['Q7_Part_1'] == "Python")
 
@@ -113,42 +136,43 @@ if df is not None:
     else:
         print("No data with such women")
 
+    print("-----------------------------------")
+
     # 7. domeniul de valori posibile si valorile extreme pentru fiecare 
     # atribut/proprietate (feature). In cazul proprietatilor nenumerice, 
     # cate valori posibile are fiecare astfel de proprietate
-    print(df.columns)
-    print(df.dtypes)
-    print(df.nunique()[:10])  # Primele 10 coloane
-    print(df.describe())
-    print(df.min(numeric_only=True))
-    print(df.max(numeric_only=True))
+    # Pentru datele numerice
+    try:
+        print(df.select_dtypes(include=['int64', 'float64']).describe())
+    except Exception as e:
+        print("Nu exista date numerice!!")
+    print("-----------------------------------")
 
     # Pentru datele nenumerice
     print(df.select_dtypes(include=['object']).nunique())
+    print("-----------------------------------")
 
     # 8. info about years in programming in number of years
     # get all the possible values for the Q6  which contains "years"
-    df['years_in_programming'] = None
+    def convert_years(value):
+        if pd.isna(value):
+            return None
+        if 'years' in value:
+            if '-' in value:
+                start, end = map(int, value.replace(' years', '').split('-'))
+                return (start + end) / 2
+            elif '+' in value:
+                return int(value.replace(' years', '').replace('+', '')) + 5
+            elif '<' in value:
+                return 0.5
+        return None
 
-    # Iterate over the rows in the DataFrame
-    for i in range(len(df)):
-        if pd.isna(df['Q6'][i]):
-            continue  # Skip NaN values
-        
-        # Check if the row contains "years"
-        if 'years' in df['Q6'][i]:
-            if '-' in df['Q6'][i]:
-                start, end = df['Q6'][i].replace(' years', '').split('-')
-                middle = (int(start) + int(end)) / 2
-                df['years_in_programming'][i] = middle
-            elif '+' in df['Q6'][i]:
-                start = df['Q6'][i].replace(' years', '').replace('+', '')
-                df['years_in_programming'][i] = int(start) + 5  # Adding 5 to represent an estimate
-            elif '<' in df['Q6'][i]:
-                df['years_in_programming'][i] = 0.5  # For < 1 year
+    # Apply the function to the 'Q6' column to create a new 'years_in_programming' column
+    df['years_in_programming'] = df['Q6'].apply(convert_years)
 
     # Print the updated DataFrame with the new 'years_in_programming' column
     print(df['years_in_programming'].unique())
+    print("-----------------------------------")
 
     # Calculate moments of order 1 and 2 (min, max, mean, std, median)
     min_value = df['years_in_programming'].min()
@@ -159,10 +183,15 @@ if df is not None:
 
     # Print the moments (statistics)
     print(f"Minimum years in programming: {min_value}")
+    print("-----------------------------------")
     print(f"Maximum years in programming: {max_value}")
+    print("-----------------------------------")
     print(f"Mean years in programming: {mean_value}")
+    print("-----------------------------------")
     print(f"Standard deviation of years in programming: {std_dev}")
+    print("-----------------------------------")
     print(f"Median years in programming: {median_value}")
+    print("-----------------------------------")
 
     # Filter the data for respondents who program in Python
     python_programmers = df[df['Q7_Part_1'] == 'Python']
