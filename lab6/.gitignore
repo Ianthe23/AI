@@ -1,0 +1,11 @@
+data/
+__pycache__/
+*/__pycache__/
+*.png
+*.pdf
+*.html
+*.txt
+*.csv
+*.json
+*.yaml
+*.yml
