@@ -60,22 +60,22 @@ print('out: ', outputs[:5])
 
 # see how the data looks (plot the histograms associated to input data - GDP feature - and output data - happiness)
 
-def plotDataHistogramGBP(x, variableName):
-    n, bins, patches = plt.hist(x, 10)
-    plt.title('Histogram of ' + variableName)
-    plt.show()
+# def plotDataHistogramGBP(x, variableName):
+#     n, bins, patches = plt.hist(x, 10)
+#     plt.title('Histogram of ' + variableName)
+#     plt.show()
 
-plotDataHistogramGBP(inputs, 'capita GDP')
-plotDataHistogramGBP(outputs, 'Happiness score')
+# plotDataHistogramGBP(inputs, 'capita GDP')
+# plotDataHistogramGBP(outputs, 'Happiness score')
 
 
-# check the liniarity (to check that a linear relationship exists between the dependent variable (y = happiness) and the independent variable (x = capita).)
+# # check the liniarity (to check that a linear relationship exists between the dependent variable (y = happiness) and the independent variable (x = capita).)
 
-plt.plot(inputs, outputs, 'ro') 
-plt.xlabel('GDP capita')
-plt.ylabel('happiness')
-plt.title('GDP capita vs. happiness')
-plt.show()
+# plt.plot(inputs, outputs, 'ro') 
+# plt.xlabel('GDP capita')
+# plt.ylabel('happiness')
+# plt.title('GDP capita vs. happiness')
+# plt.show()
 
 
 # Split the Data Into Training and Test Subsets
@@ -95,41 +95,41 @@ trainOutputs = [outputs[i] for i in trainSample]
 validationInputs = [inputs[i] for i in validationSample]
 validationOutputs = [outputs[i] for i in validationSample]
 
-plt.plot(trainInputs, trainOutputs, 'ro', label = 'training data')   #train data are plotted by red and circle sign
-plt.plot(validationInputs, validationOutputs, 'g^', label = 'validation data')     #test data are plotted by green and a triangle sign
-plt.title('train and validation data')
-plt.xlabel('GDP capita')
-plt.ylabel('happiness')
-plt.legend()
-plt.show()
+# plt.plot(trainInputs, trainOutputs, 'ro', label = 'training data')   #train data are plotted by red and circle sign
+# plt.plot(validationInputs, validationOutputs, 'g^', label = 'validation data')     #test data are plotted by green and a triangle sign
+# plt.title('train and validation data')
+# plt.xlabel('GDP capita')
+# plt.ylabel('happiness')
+# plt.legend()
+# plt.show()
 
 
 
 # learning step: init and train a linear regression model y = f(x) = w0 + w1 * x
 # Prediction step: used the trained model to estimate the output for a new input
-
-# using sklearn 
-# training data preparation (the sklearn linear model requires as input training data as noSamples x noFeatures array; in the current case, the input must be a matrix of len(trainInputs) lineas and one columns (a single feature is used in this problem))
-# xx = [[el] for el in trainInputs]
-
-# model initialisation
-# regressor = linear_model.LinearRegression()
-# training the model by using the training inputs and known training outputs
-# regressor.fit(xx, trainOutputs)
-# save the model parameters
-# w0, w1 = regressor.intercept_, regressor.coef_[0]
-# print('the learnt model: f(x) = ', w0, ' + ', w1, ' * x')
-
-# using developed code
-from utils.functions import MyLinearUnivariateRegression
+# sing sklearn 
+#training data preparation (the sklearn linear model requires as input training data as noSamples x noFeatures array; in the current case, the input must be a matrix of len(trainInputs) lineas and one columns (a single feature is used in this problem))
+xx = [[el] for el in trainInputs]
 
 # model initialisation
-regressor = MyLinearUnivariateRegression()
+regressor = linear_model.LinearRegression()
 # training the model by using the training inputs and known training outputs
-regressor.fit(trainInputs, trainOutputs)
+regressor.fit(xx, trainOutputs)
 # save the model parameters
-w0, w1 = regressor.intercept_, regressor.coef_
+w0, w1 = regressor.intercept_, regressor.coef_[0]
 print('the learnt model: f(x) = ', w0, ' + ', w1, ' * x')
+
+
+# # using developed code
+# from utils.functions import MyLinearUnivariateRegression
+
+# # model initialisation
+# regressor = MyLinearUnivariateRegression()
+# # training the model by using the training inputs and known training outputs
+# regressor.fit(trainInputs, trainOutputs)
+# # save the model parameters
+# w0, w1 = regressor.intercept_, regressor.coef_
+# print('the learnt model: f(x) = ', w0, ' + ', w1, ' * x')
 
 
 
@@ -163,13 +163,13 @@ plt.show()
 computedValidationOutputs = regressor.predict([[x] for x in validationInputs])
 
 # plot the computed outputs (see how far they are from the real outputs)
-plt.plot(validationInputs, computedValidationOutputs, 'yo', label = 'computed test data')  #computed test data are plotted yellow red and circle sign
-plt.plot(validationInputs, validationOutputs, 'g^', label = 'real test data')  #real test data are plotted by green triangles
-plt.title('computed validation and real validation data')
-plt.xlabel('GDP capita')
-plt.ylabel('happiness')
-plt.legend()
-plt.show()
+# plt.plot(validationInputs, computedValidationOutputs, 'yo', label = 'computed test data')  #computed test data are plotted yellow red and circle sign
+# plt.plot(validationInputs, validationOutputs, 'g^', label = 'real test data')  #real test data are plotted by green triangles
+# plt.title('computed validation and real validation data')
+# plt.xlabel('GDP capita')
+# plt.ylabel('happiness')
+# plt.legend()
+# plt.show()
 
 
 

@@ -76,10 +76,10 @@ def object_detection():
             detect_bicycles(image_path)
 
 def main():
-    # binary_classification()
+    binary_classification()
     # object_detection()
     # compare_annotation_methods("images/bike02.jpg")
-    evaluate_detection_performance("images/bike05.jpg")
+    # evaluate_detection_performance("images/bike05.jpg")
 
 
 if __name__ == "__main__":

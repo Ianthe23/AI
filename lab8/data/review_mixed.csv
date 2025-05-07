@@ -1,0 +1,51 @@
+text,sentiment
+"This movie was amazing! I loved every minute of it.",positive
+"The service was terrible and the food was cold.",negative
+"I felt nothing special about this product, it's just average.",neutral
+"I'm so happy with my purchase, it exceeded all my expectations!",positive
+"The staff was friendly and helpful, but the room was not very clean.",neutral
+"Absolutely hate this app, it crashes every time I use it.",negative
+"Disappointed with the quality, not worth the money.",negative
+"It's an okay product, does what it's supposed to do.",neutral
+"Best customer service I've ever experienced, they went above and beyond!",positive
+"Wouldn't recommend this restaurant, the food was bland and overpriced.",negative
+"I'm feeling indifferent about this book, it wasn't bad but not great either.",neutral
+"Fantastic experience from start to finish, highly recommend!",positive
+"The concert was incredible, I had such a wonderful time!",positive
+"Not impressed with the features, expected more for the price.",negative
+"Average performance, nothing to write home about.",neutral
+"I adore this product, it's changed my daily routine for the better!",positive
+"Terrible experience, will never shop here again.",negative
+"It's a decent option if you're on a budget.",neutral
+"This is the worst service I've ever received, absolutely appalling.",negative
+"Fell in love with this place, the atmosphere was perfect!",positive
+"The interface is intuitive and the design is clean.",positive
+"Buggy software that kept freezing my computer.",negative
+"The movie has its moments but overall feels mediocre.",neutral
+"Extremely satisfied with my purchase, superior quality!",positive
+"Rude staff and long wait times, avoid at all costs.",negative
+"Neither great nor terrible, just an average experience.",neutral
+"I'm thrilled with how well this works, exceeded my expectations!",positive
+"Completely useless product, total waste of money.",negative
+"It serves its purpose but doesn't stand out from competitors.",neutral
+"This is revolutionary, I can't imagine my life without it now!",positive
+"I'm proud to support this eco-friendly company and their initiatives.",positive
+"The packaging was damaged and customer service was unhelpful.",negative
+"The view was stunning and the accommodations were perfect for our needs.",positive
+"The hotel room was clean but the neighborhood felt unsafe.",neutral
+"This dishwasher leaves spots on all my glasses, very frustrating.",negative
+"The instructions were clear and the assembly was straightforward.",positive
+"The app crashes frequently and loses my data.",negative
+"The graphics are impressive but the storyline is predictable.",neutral
+"The efficiency of this tool has significantly improved my workflow.",positive
+"The coffee tastes burnt and the prices are too high.",negative
+"I appreciate the sustainable packaging but the product itself is just okay.",neutral
+"This changed my life for the better, an absolute game-changer!",positive
+"The delivery was late and the item was damaged.",negative
+"By choosing a bike over a car, I'm reducing my environmental footprint. Cycling promotes eco-friendly transportation, and I'm proud to be part of that movement.",positive
+"It's important to conserve water through simple actions like taking shorter showers and fixing leaky faucets.",neutral
+"I hate how companies dump waste into our oceans without any consideration for marine life.",negative
+"The new electric vehicle tax credits make sustainable transportation more accessible to everyone.",positive
+"Climate change is causing more extreme weather events globally.",neutral
+"These new regulations are killing jobs and hurting the economy for no good reason.",negative
+"Solar panels have decreased our electricity bill while helping us reduce our carbon footprint.",positive 

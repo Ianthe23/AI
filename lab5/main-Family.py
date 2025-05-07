@@ -28,7 +28,7 @@ def loadDataGBP(fileName, inputVariabName, outputVariabName):
     return inputs, outputs
 
 crtDir =  os.getcwd()
-filePath = os.path.join(crtDir, 'data', 'v2_world-happiness-report-2017.csv')
+filePath = os.path.join(crtDir, 'data', 'v3_world-happiness-report-2017.csv')
 
 inputs, outputs = loadDataGBP(filePath, 'Family', 'Happiness.Score')
 print('in:  ', inputs[:5])
@@ -37,22 +37,22 @@ print('out: ', outputs[:5])
 
 # see how the data looks (plot the histograms associated to input data - Family feature - and output data - happiness)
 
-def plotDataHistogramGBP(x, variableName):
-    n, bins, patches = plt.hist(x, 10)
-    plt.title('Histogram of ' + variableName)
-    plt.show()
+# def plotDataHistogramGBP(x, variableName):
+#     n, bins, patches = plt.hist(x, 10)
+#     plt.title('Histogram of ' + variableName)
+#     plt.show()
 
-plotDataHistogramGBP(inputs, 'Family')
-plotDataHistogramGBP(outputs, 'Happiness score')
+# plotDataHistogramGBP(inputs, 'Family')
+# plotDataHistogramGBP(outputs, 'Happiness score')
 
 
 # check the liniarity (to check that a linear relationship exists between the dependent variable (y = happiness) and the independent variable (x = capita).)
 
-plt.plot(inputs, outputs, 'ro') 
-plt.xlabel('Family')
-plt.ylabel('happiness')
-plt.title('Family vs. happiness')
-plt.show()
+# plt.plot(inputs, outputs, 'ro') 
+# plt.xlabel('Family')
+# plt.ylabel('happiness')
+# plt.title('Family vs. happiness')
+# plt.show()
 
 
 # Split the Data Into Training and Test Subsets
@@ -72,28 +72,28 @@ trainOutputs = [outputs[i] for i in trainSample]
 validationInputs = [inputs[i] for i in validationSample]
 validationOutputs = [outputs[i] for i in validationSample]
 
-plt.plot(trainInputs, trainOutputs, 'ro', label = 'training data')   #train data are plotted by red and circle sign
-plt.plot(validationInputs, validationOutputs, 'g^', label = 'validation data')     #test data are plotted by green and a triangle sign
-plt.title('train and validation data')
-plt.xlabel('Family')
-plt.ylabel('happiness')
-plt.legend()
-plt.show()
+# plt.plot(trainInputs, trainOutputs, 'ro', label = 'training data')   #train data are plotted by red and circle sign
+# plt.plot(validationInputs, validationOutputs, 'g^', label = 'validation data')     #test data are plotted by green and a triangle sign
+# plt.title('train and validation data')
+# plt.xlabel('Family')
+# plt.ylabel('happiness')
+# plt.legend()
+# plt.show()
 
 
 
-# learning step: init and train a linear regression model y = f(x) = w0 + w1 * x
-# Prediction step: used the trained model to estimate the output for a new input
+#learning step: init and train a linear regression model y = f(x) = w0 + w1 * x
+#Prediction step: used the trained model to estimate the output for a new input
 
-# using sklearn 
-# training data preparation (the sklearn linear model requires as input training data as noSamples x noFeatures array; in the current case, the input must be a matrix of len(trainInputs) lineas and one columns (a single feature is used in this problem))
+# #using sklearn 
+# #training data preparation (the sklearn linear model requires as input training data as noSamples x noFeatures array; in the current case, the input must be a matrix of len(trainInputs) lineas and one columns (a single feature is used in this problem))
 # xx = [[el] for el in trainInputs]
 
-# model initialisation
+# #model initialisation
 # regressor = linear_model.LinearRegression()
-# training the model by using the training inputs and known training outputs
+# #training the model by using the training inputs and known training outputs
 # regressor.fit(xx, trainOutputs)
-# save the model parameters
+# #save the model parameters
 # w0, w1 = regressor.intercept_, regressor.coef_[0]
 # print('the learnt model: f(x) = ', w0, ' + ', w1, ' * x')
 
@@ -140,13 +140,13 @@ plt.show()
 computedValidationOutputs = regressor.predict([[x] for x in validationInputs])
 
 # plot the computed outputs (see how far they are from the real outputs)
-plt.plot(validationInputs, computedValidationOutputs, 'yo', label = 'computed test data')  #computed test data are plotted yellow red and circle sign
-plt.plot(validationInputs, validationOutputs, 'g^', label = 'real test data')  #real test data are plotted by green triangles
-plt.title('computed validation and real validation data')
-plt.xlabel('Family')
-plt.ylabel('happiness')
-plt.legend()
-plt.show()
+# plt.plot(validationInputs, computedValidationOutputs, 'yo', label = 'computed test data')  #computed test data are plotted yellow red and circle sign
+# plt.plot(validationInputs, validationOutputs, 'g^', label = 'real test data')  #real test data are plotted by green triangles
+# plt.title('computed validation and real validation data')
+# plt.xlabel('Family')
+# plt.ylabel('happiness')
+# plt.legend()
+# plt.show()
 
 
 

@@ -52,9 +52,11 @@ class MyBatchGDRegression:
                 for i, x in enumerate(X_batch):
                     error = y_pred[i] - y_batch[i]
                     batch_error += error * error  # Sum of squared errors
-                    for j in range(n_features):
-                        dw[j] += error * x[j]
-                    db += error
+
+                for j in range(n_features):
+                    dw[j] += batch_error/len(X_batch) * x[j]
+                db += batch_error/len(X_batch)
+
                 
                 # Update weights using batch gradients
                 for j in range(n_features):

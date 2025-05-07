@@ -60,39 +60,39 @@ print('out: ', outputs[:5])
 
 # see how the data looks (plot the histograms associated to input data - GDP feature - and output data - happiness)
 
-def plotDataHistogramGBPFreedom(x, variableName):
-    # Convert to list if it's a numpy array
-    if isinstance(x, np.ndarray):
-        x = x.tolist()
-    n, bins, patches = plt.hist(x, 10)
-    plt.title('Histogram of ' + variableName)
-    plt.show()
+# def plotDataHistogramGBPFreedom(x, variableName):
+#     # Convert to list if it's a numpy array
+#     if isinstance(x, np.ndarray):
+#         x = x.tolist()
+#     n, bins, patches = plt.hist(x, 10)
+#     plt.title('Histogram of ' + variableName)
+#     plt.show()
 
-inputs = np.array(inputs)
-plotDataHistogramGBPFreedom(inputs[:, 0], 'GDP capita')
-plotDataHistogramGBPFreedom(inputs[:, 1], 'Freedom')
-plotDataHistogramGBPFreedom(outputs, 'Happiness score')
+# inputs = np.array(inputs)
+# plotDataHistogramGBPFreedom(inputs[:, 0], 'GDP capita')
+# plotDataHistogramGBPFreedom(inputs[:, 1], 'Freedom')
+# plotDataHistogramGBPFreedom(outputs, 'Happiness score')
 
 
-# check the liniarity (to check that a linear relationship exists between the dependent variable (y = happiness) and the independent variables (x = capita and freedom).)
-plt.figure(figsize=(12, 5))
+# # check the liniarity (to check that a linear relationship exists between the dependent variable (y = happiness) and the independent variables (x = capita and freedom).)
+# plt.figure(figsize=(12, 5))
 
-# First subplot for GDP vs Happiness
-plt.subplot(1, 2, 1)
-plt.plot(inputs[:, 0], outputs, 'ro') 
-plt.xlabel('GDP capita')
-plt.ylabel('happiness')
-plt.title('GDP capita vs. happiness')
+# # First subplot for GDP vs Happiness
+# plt.subplot(1, 2, 1)
+# plt.plot(inputs[:, 0], outputs, 'ro') 
+# plt.xlabel('GDP capita')
+# plt.ylabel('happiness')
+# plt.title('GDP capita vs. happiness')
 
-# Second subplot for Freedom vs Happiness
-plt.subplot(1, 2, 2)
-plt.plot(inputs[:, 1], outputs, 'ro') 
-plt.xlabel('Freedom')
-plt.ylabel('happiness')
-plt.title('Freedom vs. happiness')
+# # Second subplot for Freedom vs Happiness
+# plt.subplot(1, 2, 2)
+# plt.plot(inputs[:, 1], outputs, 'ro') 
+# plt.xlabel('Freedom')
+# plt.ylabel('happiness')
+# plt.title('Freedom vs. happiness')
 
-plt.tight_layout()  # Adjust layout to prevent overlap
-plt.show()
+# plt.tight_layout()  # Adjust layout to prevent overlap
+# plt.show()
 
 
 # Split the Data Into Training and Test Subsets
@@ -112,59 +112,59 @@ trainOutputs = [outputs[i] for i in trainSample]
 validationInputs = [inputs[i] for i in validationSample]
 validationOutputs = [outputs[i] for i in validationSample]
 
-# Create a figure with two subplots
-plt.figure(figsize=(12, 5))
+# # Create a figure with two subplots
+# plt.figure(figsize=(12, 5))
 
-# First subplot for GDP vs Happiness
-plt.subplot(1, 2, 1)
-plt.plot([x[0] for x in trainInputs], trainOutputs, 'ro', label='training data')
-plt.plot([x[0] for x in validationInputs], validationOutputs, 'g^', label='validation data')
-plt.xlabel('GDP capita')
-plt.ylabel('happiness')
-plt.title('GDP capita vs. happiness')
-plt.legend()
+# # First subplot for GDP vs Happiness
+# plt.subplot(1, 2, 1)
+# plt.plot([x[0] for x in trainInputs], trainOutputs, 'ro', label='training data')
+# plt.plot([x[0] for x in validationInputs], validationOutputs, 'g^', label='validation data')
+# plt.xlabel('GDP capita')
+# plt.ylabel('happiness')
+# plt.title('GDP capita vs. happiness')
+# plt.legend()
 
-# Second subplot for Freedom vs Happiness
-plt.subplot(1, 2, 2)
-plt.plot([x[1] for x in trainInputs], trainOutputs, 'ro', label='training data')
-plt.plot([x[1] for x in validationInputs], validationOutputs, 'g^', label='validation data')
-plt.xlabel('Freedom')
-plt.ylabel('happiness')
-plt.title('Freedom vs. happiness')
-plt.legend()
+# # Second subplot for Freedom vs Happiness
+# plt.subplot(1, 2, 2)
+# plt.plot([x[1] for x in trainInputs], trainOutputs, 'ro', label='training data')
+# plt.plot([x[1] for x in validationInputs], validationOutputs, 'g^', label='validation data')
+# plt.xlabel('Freedom')
+# plt.ylabel('happiness')
+# plt.title('Freedom vs. happiness')
+# plt.legend()
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
 
 
 # learning step: init and train a linear regression model y = f(x) = w0 + w1 * x1 + w2 * x2
 # Prediction step: used the trained model to estimate the output for a new input
 
-# using developed code
-from utils.functions import MyLinearBivariateRegression
-
-# model initialisation
-regressor = MyLinearBivariateRegression()
-# training the model by using the training inputs and known training outputs
-regressor.fit(trainInputs, trainOutputs)
-# save the model parameters
-w0 = regressor.intercept_
-w1, w2 = regressor.coef_
-print('the learnt model: f(x) = ', w0, ' + ', w1, ' * x1 + ', w2, ' * x2')
-
-
-# # using sklearn 
-# # training data preparation (the sklearn linear model requires as input training data as noSamples x noFeatures array; in the current case, the input must be a matrix of len(trainInputs) lineas and two columns (two features are used in this problem))
-# # xx = [[el1, el2] for el1, el2 in trainInputs]
+# # using developed code
+# from utils.functions import MyLinearBivariateRegression
 
 # # model initialisation
-# regressor = linear_model.LinearRegression()
+# regressor = MyLinearBivariateRegression()
 # # training the model by using the training inputs and known training outputs
 # regressor.fit(trainInputs, trainOutputs)
 # # save the model parameters
 # w0 = regressor.intercept_
 # w1, w2 = regressor.coef_
 # print('the learnt model: f(x) = ', w0, ' + ', w1, ' * x1 + ', w2, ' * x2')
+
+
+# using sklearn 
+# training data preparation (the sklearn linear model requires as input training data as noSamples x noFeatures array; in the current case, the input must be a matrix of len(trainInputs) lineas and two columns (two features are used in this problem))
+xx = [[el1, el2] for el1, el2 in trainInputs]
+
+# # model initialisation
+regressor = linear_model.LinearRegression()
+# # training the model by using the training inputs and known training outputs
+regressor.fit(trainInputs, trainOutputs)
+# # save the model parameters
+w0 = regressor.intercept_
+w1, w2 = regressor.coef_
+print('the learnt model: f(x) = ', w0, ' + ', w1, ' * x1 + ', w2, ' * x2')
 
 
 # plot the learnt model
@@ -216,29 +216,29 @@ computedValidationOutputs = np.array(computedValidationOutputs)
 # Ensure computedValidationOutputs is a 1D array
 computedValidationOutputs = np.array(computedValidationOutputs).flatten()
 
-# Create figure for validation results
-plt.figure(figsize=(12, 5))
+# # Create figure for validation results
+# plt.figure(figsize=(12, 5))
 
-# First subplot - GDP vs Happiness
-plt.subplot(1, 2, 1)
-plt.scatter(validationInputs[:, 0], validationOutputs, marker='^', c='g', label='real validation data')
-plt.scatter(validationInputs[:, 0], computedValidationOutputs, marker='o', c='y', label='computed validation data')
-plt.xlabel('GDP capita')
-plt.ylabel('happiness')
-plt.title('GDP capita vs. happiness (validation)')
-plt.legend()
+# # First subplot - GDP vs Happiness
+# plt.subplot(1, 2, 1)
+# plt.scatter(validationInputs[:, 0], validationOutputs, marker='^', c='g', label='real validation data')
+# plt.scatter(validationInputs[:, 0], computedValidationOutputs, marker='o', c='y', label='computed validation data')
+# plt.xlabel('GDP capita')
+# plt.ylabel('happiness')
+# plt.title('GDP capita vs. happiness (validation)')
+# plt.legend()
 
-# Second subplot - Freedom vs Happiness
-plt.subplot(1, 2, 2)
-plt.scatter(validationInputs[:, 1], validationOutputs, marker='^', c='g', label='real validation data')
-plt.scatter(validationInputs[:, 1], computedValidationOutputs, marker='o', c='y', label='computed validation data')
-plt.xlabel('Freedom')
-plt.ylabel('happiness')
-plt.title('Freedom vs. happiness (validation)')
-plt.legend()
+# # Second subplot - Freedom vs Happiness
+# plt.subplot(1, 2, 2)
+# plt.scatter(validationInputs[:, 1], validationOutputs, marker='^', c='g', label='real validation data')
+# plt.scatter(validationInputs[:, 1], computedValidationOutputs, marker='o', c='y', label='computed validation data')
+# plt.xlabel('Freedom')
+# plt.ylabel('happiness')
+# plt.title('Freedom vs. happiness (validation)')
+# plt.legend()
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
 
 # compute the prediction error
 error = 0.0
