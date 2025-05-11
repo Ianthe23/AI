@@ -11,6 +11,69 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
+# Custom implementations of restricted functions
+def custom_exp(x):
+    # Custom exponential implementation using Taylor series
+    result = np.ones_like(x)
+    term = np.ones_like(x)
+    for i in range(1, 20):  # Using 20 terms for reasonable accuracy
+        term = term * x / i
+        result += term
+    return result
+
+def custom_sum(x, axis=None, keepdims=False):
+    """
+    Custom sum implementation that mimics numpy.sum
+    
+    Args:
+        x: Input array
+        axis: Axis along which to sum (None for all elements)
+        keepdims: Whether to keep the dimensions of the input array
+    """
+    if axis is None:
+        result = sum(x.flatten())
+        if keepdims:
+            return np.array([[result]])
+        return result
+    
+    # Handle axis-specific sums
+    if axis == 0:
+        result = np.array([sum(x[:, i]) for i in range(x.shape[1])])
+    elif axis == 1:
+        result = np.array([sum(x[i, :]) for i in range(x.shape[0])])
+    else:
+        result = sum(x.flatten())
+    
+    # Reshape result if keepdims is True
+    if keepdims:
+        if axis == 0:
+            result = result.reshape(1, -1)
+        elif axis == 1:
+            result = result.reshape(-1, 1)
+    
+    return result
+
+def custom_dot(a, b):
+    # Custom matrix multiplication implementation
+    if len(a.shape) == 1 and len(b.shape) == 1:
+        return sum(a[i] * b[i] for i in range(len(a)))
+    
+    result = np.zeros((a.shape[0], b.shape[1]))
+    for i in range(a.shape[0]):
+        for j in range(b.shape[1]):
+            result[i, j] = sum(a[i, k] * b[k, j] for k in range(a.shape[1]))
+    return result
+
+def custom_log(x):
+    # Custom natural logarithm implementation using Taylor series
+    # Note: This is a simplified version and works best for x close to 1
+    x = np.clip(x, 1e-10, None)  # Avoid log(0)
+    y = (x - 1) / (x + 1)
+    result = 0
+    for i in range(1, 20, 2):  # Using 20 terms
+        result += (y ** i) / i
+    return 2 * result
+
 # The message we need to classify
 MESSAGE_TO_CLASSIFY = "By choosing a bike over a car, I'm reducing my environmental footprint. Cycling promotes eco-friendly transportation, and I'm proud to be part of that movement."
 
@@ -39,82 +102,97 @@ class CustomNeuralNetwork:
         self.learning_rate = learning_rate
         
         # Initialize weights with small random values
-        # Weights from input to hidden layer
         self.W1 = np.random.randn(self.input_size, self.hidden_size) * 0.01
         self.b1 = np.zeros((1, self.hidden_size))
-        
-        # Weights from hidden to output layer
         self.W2 = np.random.randn(self.hidden_size, self.output_size) * 0.01
         self.b2 = np.zeros((1, self.output_size))
         
-        # Training history
         self.loss_history = []
         self.accuracy_history = []
         
     def sigmoid(self, x):
-        # Sigmoid activation function
-        return 1 / (1 + np.exp(-np.clip(x, -500, 500)))  # Clip to avoid overflow
+        # Sigmoid activation function using custom_exp
+        return 1 / (1 + custom_exp(-np.clip(x, -500, 500)))
     
     def sigmoid_derivative(self, x):
-        # Derivative of sigmoid function
         return x * (1 - x)
     
     def softmax(self, x):
-        # Softmax activation for output layer
-        exp_x = np.exp(x - np.max(x, axis=1, keepdims=True))
+        # Softmax activation using custom_exp
+        x_shifted = x - np.max(x, axis=1, keepdims=True)
+        exp_x = custom_exp(x_shifted)
         return exp_x / np.sum(exp_x, axis=1, keepdims=True)
     
     def forward(self, X):
-        # Forward pass
-        # Hidden layer
-        self.z1 = np.dot(X, self.W1) + self.b1
+        # Forward pass using custom_dot
+        self.z1 = custom_dot(X, self.W1) + self.b1
         self.a1 = self.sigmoid(self.z1)
         
-        # Output layer
-        self.z2 = np.dot(self.a1, self.W2) + self.b2
+        self.z2 = custom_dot(self.a1, self.W2) + self.b2
         self.a2 = self.softmax(self.z2)
         
         return self.a2
     
     def compute_loss(self, y_true, y_pred):
-        # Compute cross-entropy loss
+        # Compute cross-entropy loss using custom_log
         m = y_true.shape[0]
-        log_likelihood = -np.log(y_pred[range(m), y_true.argmax(axis=1)])
-        loss = np.sum(log_likelihood) / m
+        log_likelihood = -custom_log(y_pred[range(m), y_true.argmax(axis=1)])
+        loss = custom_sum(log_likelihood) / m
         return loss
     
     def compute_accuracy(self, y_true, y_pred):
-        # Compute accuracy
         predictions = np.argmax(y_pred, axis=1)
         true_labels = np.argmax(y_true, axis=1)
-        accuracy = np.mean(predictions == true_labels)
-        return accuracy
+        return np.mean(predictions == true_labels)
     
     def backward(self, X, y):
-        # Backward pass (backpropagation)
+        """
+        Backpropagation algorithm to compute gradients and update network parameters.
+        
+        Args:
+            X: Input features (shape: batch_size x input_size)
+            y: True labels in one-hot format (shape: batch_size x output_size)
+        """
+        # Get batch size for normalization
         m = X.shape[0]
         
-        # Gradient of loss with respect to output
-        delta2 = self.a2.copy()
+        # Step 1: Compute output layer error (delta2)
+        # This represents how much each output neuron contributed to the error
+        delta2 = self.a2.copy()  # Start with the output layer activations
+        # For each sample, subtract 1 from the predicted class (where true label is 1)
         delta2[range(m), y.argmax(axis=1)] -= 1
+        # Normalize by batch size
         delta2 /= m
         
-        # Gradient of W2 and b2
-        dW2 = np.dot(self.a1.T, delta2)
-        db2 = np.sum(delta2, axis=0, keepdims=True)
+        # Step 2: Compute gradients for output layer weights and biases
+        # dW2 = (a1^T * delta2) - gradient of loss with respect to W2
+        # This shows how much each hidden neuron contributed to the output error
+        dW2 = custom_dot(self.a1.T, delta2)
+        # db2 = sum(delta2) - gradient of loss with respect to b2
+        # This shows how much each bias contributed to the output error
+        db2 = custom_sum(delta2, axis=0, keepdims=True)
         
-        # Gradient of hidden layer
-        delta1 = np.dot(delta2, self.W2.T) * self.sigmoid_derivative(self.a1)
+        # Step 3: Compute hidden layer error (delta1)
+        # This propagates the error back to the hidden layer
+        # delta1 = (delta2 * W2^T) * sigmoid_derivative(a1)
+        # First part: (delta2 * W2^T) - error propagated back through weights
+        # Second part: * sigmoid_derivative(a1) - chain rule for sigmoid activation
+        delta1 = custom_dot(delta2, self.W2.T) * self.sigmoid_derivative(self.a1)
         
-        # Gradient of W1 and b1
-        dW1 = np.dot(X.T, delta1)
-        db1 = np.sum(delta1, axis=0, keepdims=True)
+        # Step 4: Compute gradients for hidden layer weights and biases
+        # dW1 = (X^T * delta1) - gradient of loss with respect to W1
+        # This shows how much each input feature contributed to the hidden layer error
+        dW1 = custom_dot(X.T, delta1)
+        # db1 = sum(delta1) - gradient of loss with respect to b1
+        # This shows how much each hidden layer bias contributed to the error
+        db1 = custom_sum(delta1, axis=0, keepdims=True)
         
-        # Update parameters
-        self.W1 -= self.learning_rate * dW1
-        self.b1 -= self.learning_rate * db1
-        self.W2 -= self.learning_rate * dW2
-        self.b2 -= self.learning_rate * db2
+        # Step 5: Update network parameters using gradient descent
+        # Move in the opposite direction of the gradient, scaled by learning rate
+        self.W1 -= self.learning_rate * dW1  # Update input-to-hidden weights
+        self.b1 -= self.learning_rate * db1  # Update hidden layer biases
+        self.W2 -= self.learning_rate * dW2  # Update hidden-to-output weights
+        self.b2 -= self.learning_rate * db2  # Update output layer biases
     
     def train(self, X, y, epochs=100, batch_size=32, validation_data=None):
         num_samples = X.shape[0]
@@ -122,7 +200,7 @@ class CustomNeuralNetwork:
         
         # One-hot encode the target labels if they're not already
         if len(y.shape) == 1:
-            encoder = OneHotEncoder(sparse=False)
+            encoder = OneHotEncoder(sparse_output=False)
             y = encoder.fit_transform(y.reshape(-1, 1))
         
         print(f"Training custom neural network for {epochs} epochs...")
@@ -241,7 +319,7 @@ def main():
         df['encoded_sentiment'] = label_encoder.fit_transform(df[label_col])
         
         # One-hot encode the labels
-        encoder = OneHotEncoder(sparse=False)
+        encoder = OneHotEncoder(sparse_output=False)
         y_one_hot = encoder.fit_transform(df['encoded_sentiment'].values.reshape(-1, 1))
         
         # Display the label mapping
@@ -304,7 +382,9 @@ def main():
         y_test_classes = np.argmax(y_test, axis=1)
         
         print("\nClassification Report:")
-        print(classification_report(y_test_classes, y_pred_classes, target_names=label_encoder.classes_))
+        print(classification_report(y_test_classes, y_pred_classes, 
+                                 target_names=label_encoder.classes_,
+                                 labels=range(len(label_encoder.classes_))))
         
         # Analyze the given message
         print(f"\n=== Analyzing message with Custom Neural Network ===")

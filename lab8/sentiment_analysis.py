@@ -149,7 +149,7 @@ def train_and_evaluate_model(X_train, y_train, X_test, y_test, feature_type):
     print(f"\nTest accuracy: {accuracy:.4f}")
     
     # Predict on test set
-    y_pred = np.argmax(model.predict(X_test), axis=1)
+    y_pred = np.argmax(model.predict(X_test), axis=1)  # Convert probabilities to class labels
     print("\nClassification Report:")
     print(classification_report(y_test, y_pred))
     
