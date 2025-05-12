@@ -1,0 +1,49 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+ENV/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Fine-tuned models (they're large)
+fine-tuned-*/
+*-tuned/
+*.pt
+*.bin
+*.model
+
+# Results and experiment directories
+evaluation_results/
+parameter_results/
+*.json
+
+# Generated files
+best_poem.txt
+poetry_analysis_report.md
+
+# Temporary poetry files
+*_poetry.txt
+*_first_lines.txt
+original_poems.txt
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# IDE directories
+.idea/
+.vscode/
+*.swp
+*.swo 
