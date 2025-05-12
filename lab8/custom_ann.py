@@ -96,10 +96,10 @@ def preprocess_text(text):
 class CustomNeuralNetwork:
     def __init__(self, input_size, hidden_size, output_size, learning_rate=0.01):
         # Initialize weights and biases
-        self.input_size = input_size
-        self.hidden_size = hidden_size
-        self.output_size = output_size
-        self.learning_rate = learning_rate
+        self.input_size = input_size # number of input features
+        self.hidden_size = hidden_size # number of neurons in the hidden layer
+        self.output_size = output_size # number of output classes
+        self.learning_rate = learning_rate # learning rate for gradient descent
         
         # Initialize weights with small random values
         self.W1 = np.random.randn(self.input_size, self.hidden_size) * 0.01
@@ -111,26 +111,32 @@ class CustomNeuralNetwork:
         self.accuracy_history = []
         
     def sigmoid(self, x):
-        # Sigmoid activation function using custom_exp
+        # Sigmoid activation function using custom_exp => returns a value between 0 and 1
         return 1 / (1 + custom_exp(-np.clip(x, -500, 500)))
     
     def sigmoid_derivative(self, x):
+        # Derivative of the sigmoid function, needed for backpropagation
         return x * (1 - x)
     
     def softmax(self, x):
-        # Softmax activation using custom_exp
+        # Softmax activation using custom_exp, converts the output of the neural network to a probability distribution
         x_shifted = x - np.max(x, axis=1, keepdims=True)
         exp_x = custom_exp(x_shifted)
         return exp_x / np.sum(exp_x, axis=1, keepdims=True)
     
     def forward(self, X):
-        # Forward pass using custom_dot
+        # Forward pass using custom_dot => computes the weighted sum of the inputs and the weights
+        # calculeaza activarea neuronilor din prima l
         self.z1 = custom_dot(X, self.W1) + self.b1
+        # aplica functia sigmoid la activarea neuronilor
         self.a1 = self.sigmoid(self.z1)
         
+        # calculeaza activarea neuronilor din a doua l
         self.z2 = custom_dot(self.a1, self.W2) + self.b2
+        # aplica functia softmax la activarea neuronilor
         self.a2 = self.softmax(self.z2)
         
+        # returneaza probabilitatea pentru fiecare clasa
         return self.a2
     
     def compute_loss(self, y_true, y_pred):

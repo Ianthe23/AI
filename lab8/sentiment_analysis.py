@@ -16,6 +16,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import re
+from textblob import TextBlob
 import gensim.downloader as gensim_api
 
 # Download nltk resources
@@ -71,6 +72,7 @@ def preprocess_text(text):
 
 # Feature extraction methods
 def extract_bow_features(train_texts, test_texts):
+    # used CountVectorizer to convert text into a matrix of token counts
     print("\nExtracting Bag of Words features...")
     vectorizer = CountVectorizer(max_features=5000)
     X_train = vectorizer.fit_transform(train_texts).toarray()
@@ -79,6 +81,7 @@ def extract_bow_features(train_texts, test_texts):
 
 
 def extract_tfidf_features(train_texts, test_texts):
+    # Uses TfidfVectorizer to convert text into a matrix of TF-IDF features
     print("\nExtracting TF-IDF features...")
     vectorizer = TfidfVectorizer(max_features=5000)
     X_train = vectorizer.fit_transform(train_texts).toarray()
@@ -87,6 +90,7 @@ def extract_tfidf_features(train_texts, test_texts):
 
 
 def extract_word2vec_features(train_texts, test_texts):
+    # represents each text as the average of its word vectors.
     print("\nExtracting Word2Vec features...")
     # Load pre-trained Word2Vec model
     try:
@@ -106,9 +110,17 @@ def extract_word2vec_features(train_texts, test_texts):
     except Exception as e:
         print(f"Error loading Word2Vec model: {e}")
         return None, None, None
+    
+def extract_textblob_features(train_texts, test_texts):
+    # uses TextBlob to extract sentiment features
+    print("\nExtracting TextBlob features...")
+    X_train = np.array([TextBlob(text).sentiment for text in train_texts])
+    X_test = np.array([TextBlob(text).sentiment for text in test_texts])
+    return X_train, X_test
 
 
 # Neural Network model
+# feedforward neural network using Keras
 def build_neural_network(input_dim, num_classes):
     model = Sequential([
         Dense(128, activation='relu', input_shape=(input_dim,)),
@@ -193,9 +205,14 @@ def analyze_message_with_model(model, vectorizer, message, feature_type):
             X_message = np.zeros((1, 300))
         else:
             X_message = np.mean(word_vecs, axis=0).reshape(1, -1)
+    elif feature_type == "TextBlob":
+        sentiment = TextBlob(processed_message).sentiment
+        X_message = np.array([[sentiment.polarity, sentiment.subjectivity]])
     else:
         # For BoW and TF-IDF we use the vectorizer
         X_message = vectorizer.transform([processed_message]).toarray()
+
+    
     
     # Predict sentiment
     prediction = model.predict(X_message)
@@ -268,7 +285,7 @@ def main():
         print(f"Test set size: {len(X_test)}")
         
         # Feature extraction
-        feature_type = input("\nChoose feature extraction method (1: Bag of Words, 2: TF-IDF, 3: Word2Vec) [default: 2]: ")
+        feature_type = input("\nChoose feature extraction method (1: Bag of Words, 2: TF-IDF, 3: Word2Vec, 4: TextBlob) [default: 2]: ")
         
         if feature_type == "1":
             X_train_features, X_test_features, vectorizer = extract_bow_features(X_train, X_test)
@@ -276,20 +293,31 @@ def main():
         elif feature_type == "3":
             X_train_features, X_test_features, vectorizer = extract_word2vec_features(X_train, X_test)
             feature_name = "Word2Vec"
+        elif feature_type == "4":
+            X_train_features, X_test_features = extract_textblob_features(X_train, X_test)
+            feature_name = "TextBlob"
         else:
             X_train_features, X_test_features, vectorizer = extract_tfidf_features(X_train, X_test)
             feature_name = "TF-IDF"
-        
+
         # Train and evaluate neural network
         model = train_and_evaluate_model(X_train_features, y_train, X_test_features, y_test, feature_name)
         
         # Analyze the given message using our model
-        neural_network_sentiment, nn_confidence = analyze_message_with_model(
-            model, 
-            vectorizer, 
-            MESSAGE_TO_CLASSIFY, 
-            feature_name
-        )
+        if feature_name == "TextBlob":
+            neural_network_sentiment, nn_confidence = analyze_message_with_model(
+                model, 
+                None, 
+                MESSAGE_TO_CLASSIFY, 
+                feature_name
+            )
+        else:
+            neural_network_sentiment, nn_confidence = analyze_message_with_model(
+                model, 
+                vectorizer, 
+                MESSAGE_TO_CLASSIFY, 
+                feature_name
+            )
         
         # Analyze the message using Azure
         use_azure = input("\nDo you want to analyze the message using Azure Text Analytics? (y/n): ")
