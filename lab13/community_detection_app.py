@@ -30,13 +30,13 @@ warnings.filterwarnings('ignore')
 @dataclass
 class CommunityResult:
     """Results of community detection"""
-    communities: List[List[int]]
-    modularity: float
-    num_communities: int
-    node_to_community: Dict[int, int]
-    algorithm: str
-    execution_time: float
-    parameters: Dict[str, Any]
+    communities: List[List[int]] # Groups of nodes
+    modularity: float # Measure of how well the communities are separated
+    num_communities: int # Number of communities
+    node_to_community: Dict[int, int] # Mapping of nodes to communities
+    algorithm: str # Name of the algorithm used
+    execution_time: float # Time taken to run the algorithm
+    parameters: Dict[str, Any] # Additional parameters used by the algorithm
 
 class NetworkLoader:
     """Handles loading of network data from various formats"""
@@ -94,7 +94,7 @@ class NetworkLoader:
     
     @staticmethod
     def load_edgelist(filepath: str) -> nx.Graph:
-        """Load graph from edge list file"""
+        """Load graph from edge list file, loads simple text file with edges"""
         try:
             # Try reading as space/tab separated edge list
             G = nx.read_edgelist(filepath, nodetype=int, comments='#')
@@ -192,14 +192,20 @@ class PredefinedAlgorithms:
     
     @staticmethod
     def louvain_method(G: nx.Graph) -> CommunityResult:
-        """Louvain method for community detection"""
+        """Louvain method for community detection
+            - uses a greedy algorithm to find the best partition of the graph
+            - returns a list of communities
+        """
         start_time = time.time()
         
         # Convert to simple graph if needed
         if G.is_directed():
             G = G.to_undirected()
         
-        partition = community_louvain.best_partition(G)
+        # get the best partition of the graph
+        partition = community_louvain.best_partition(G) 
+
+        # calculate the modularity of the partition
         modularity = community_louvain.modularity(partition, G)
         
         # Convert to community format
@@ -207,7 +213,10 @@ class PredefinedAlgorithms:
         for node, comm in partition.items():
             communities[comm].append(node)
         
+        # convert to list of communities
         communities_list = list(communities.values())
+
+        # calculate the execution time
         execution_time = time.time() - start_time
         
         return CommunityResult(
@@ -222,7 +231,12 @@ class PredefinedAlgorithms:
     
     @staticmethod
     def greedy_modularity(G: nx.Graph) -> CommunityResult:
-        """Greedy modularity optimization"""
+        """Greedy modularity optimization, hierarchical clustering
+            - starts with each node in its own community
+            - merges communities that increase modularity
+            - stops when no more merges increase modularity
+            - returns a list of communities
+        """
         start_time = time.time()
         
         communities = list(greedy_modularity_communities(G))
@@ -234,7 +248,10 @@ class PredefinedAlgorithms:
             for node in comm:
                 node_to_community[node] = i
         
+        # calculate the modularity of the communities
         modularity = nx.algorithms.community.modularity(G, communities)
+
+        # calculate the execution time
         execution_time = time.time() - start_time
         
         return CommunityResult(
@@ -249,7 +266,11 @@ class PredefinedAlgorithms:
     
     @staticmethod
     def label_propagation(G: nx.Graph) -> CommunityResult:
-        """Label propagation algorithm"""
+        """Label propagation algorithm, information diffusion
+            -> nodes adopt the most common label in their neighborhood
+            - uses a label propagation algorithm to find the communities
+            - returns a list of communities
+        """
         start_time = time.time()
         
         communities = list(asyn_lpa_communities(G))
@@ -278,18 +299,21 @@ class GeneticCommunityDetection:
     """
     Genetic Algorithm for Community Detection
     Based on Pizzuti (2017) - "Evolutionary computation for community detection in networks: a review"
+
+    - uses a genetic algorithm to find the best partition of the graph
+    - returns a list of communities
     """
     
     def __init__(self, G: nx.Graph, population_size: int = 100, generations: int = 200,
                  mutation_rate: float = 0.1, crossover_rate: float = 0.8):
         self.G = G
         self.nodes = list(G.nodes())
-        self.n_nodes = len(self.nodes)
-        self.node_to_idx = {node: i for i, node in enumerate(self.nodes)}
-        self.population_size = population_size
-        self.generations = generations
-        self.mutation_rate = mutation_rate
-        self.crossover_rate = crossover_rate
+        self.n_nodes = len(self.nodes) # number of nodes
+        self.node_to_idx = {node: i for i, node in enumerate(self.nodes)} # mapping of nodes to indices
+        self.population_size = population_size # number of individuals in the population
+        self.generations = generations # number of generations
+        self.mutation_rate = mutation_rate # probability of mutation
+        self.crossover_rate = crossover_rate # probability of crossover
         
         # Precompute adjacency matrix for efficiency
         self.adj_matrix = nx.adjacency_matrix(G, nodelist=self.nodes).toarray()
@@ -297,6 +321,9 @@ class GeneticCommunityDetection:
     
     def create_individual(self) -> np.ndarray:
         """Create a random individual (chromosome)
+
+        - assigns each node to a random community
+        - limits max communities to prevent trivial solutions
         
         Each individual is represented as an array where individual[i] = j
         means node i belongs to community j
@@ -306,11 +333,20 @@ class GeneticCommunityDetection:
         return np.random.randint(0, max_communities, self.n_nodes)
     
     def initialize_population(self) -> List[np.ndarray]:
-        """Initialize the population"""
+        """Initialize the population
+
+        - creates a random individual for each member of the population
+        - returns a list of individuals
+        """
         return [self.create_individual() for _ in range(self.population_size)]
     
     def fitness_modularity(self, individual: np.ndarray) -> float:
-        """Calculate modularity-based fitness"""
+        """Calculate modularity-based fitness
+        
+        - calculates the modularity of the communities = CAT DE BINE SUNT SEPARATE COMUNITATILE
+        - COMPARA CATE LEGATURI SUNT IN INTERIORUL COMUNITATILOR vs CATE AR TREBUI SA FIE LA INTAMPLARE
+        - returns the modularity
+        """
         communities = defaultdict(list)
         for i, comm in enumerate(individual):
             communities[comm].append(self.nodes[i])
@@ -328,7 +364,11 @@ class GeneticCommunityDetection:
             return -1.0
     
     def fitness_conductance(self, individual: np.ndarray) -> float:
-        """Alternative fitness function based on conductance"""
+        """Alternative fitness function based on conductance
+        
+        - calculates the conductance of the communities = CAT DE IZOLATA ESTE O COMUNITATE
+        - returns the conductance
+        """
         communities = defaultdict(set)
         for i, comm in enumerate(individual):
             communities[comm].add(i)
@@ -366,14 +406,22 @@ class GeneticCommunityDetection:
     
     def tournament_selection(self, population: List[np.ndarray], 
                            fitness_scores: List[float], tournament_size: int = 3) -> np.ndarray:
-        """Tournament selection"""
+        """Tournament selection = METODA DE SELECTIE ALE GENERATIILOR
+        
+        - selects the best individual from a tournament of size tournament_size
+        - returns the individual
+        """
         tournament_indices = random.sample(range(len(population)), tournament_size)
         tournament_fitness = [fitness_scores[i] for i in tournament_indices]
         winner_idx = tournament_indices[np.argmax(tournament_fitness)]
         return population[winner_idx].copy()
     
     def uniform_crossover(self, parent1: np.ndarray, parent2: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Uniform crossover operator"""
+        """Uniform crossover operator
+
+        - creates two children by randomly swapping genes between parents
+        - returns the children
+        """
         child1 = parent1.copy()
         child2 = parent2.copy()
         
@@ -384,7 +432,11 @@ class GeneticCommunityDetection:
         return child1, child2
     
     def mutation(self, individual: np.ndarray) -> np.ndarray:
-        """Mutation operator - random reassignment"""
+        """Mutation operator - random reassignment
+
+        - randomly assigns a node to a new community
+        - returns the mutated individual
+        """
         mutated = individual.copy()
         unique_communities = list(set(individual))
         
@@ -403,7 +455,15 @@ class GeneticCommunityDetection:
         return mutated
     
     def evolve(self, fitness_function: str = "modularity") -> CommunityResult:
-        """Main evolution loop"""
+        """Main evolution loop
+
+        - initializes the population
+        - evaluates the fitness of the population
+        - selects the best individual
+        - creates a new population
+        - repeats until the maximum number of generations is reached
+        - returns the best individual
+        """
         start_time = time.time()
         
         # Choose fitness function
@@ -489,7 +549,12 @@ class GeneticCommunityDetection:
         )
 
 class CommunityVisualizer:
-    """Visualization utilities for community detection results"""
+    """Visualization utilities for community detection results
+
+    - plots the network with communities highlighted
+    - saves the plot to a file if specified
+    - plots the fitness evolution if specified
+    """
     
     @staticmethod
     def plot_network_communities(G: nx.Graph, result: CommunityResult, 
@@ -543,7 +608,13 @@ class CommunityVisualizer:
         plt.show()
 
 class CommunityDetectionApp:
-    """Main application class"""
+    """Main application class
+
+    - loads the network
+    - runs the predefined algorithms
+    - runs the genetic algorithm
+    - compares the results
+    """
     
     def __init__(self):
         self.networks = NetworkLoader.get_available_networks()
@@ -736,7 +807,7 @@ class CommunityDetectionApp:
         
         print(f"Results saved to {output_file}")
     
-    def run_full_analysis(self, network_name: str, visualize: bool = True):
+    def run_full_analysis(self, network_name: str, visualize: bool = True, save_plots: bool = False):
         """Run complete analysis on a network"""
         # Load network
         G = self.load_network(network_name)
@@ -764,7 +835,15 @@ class CommunityDetectionApp:
             best_result = max(all_results, key=lambda x: x.modularity)
             
             visualizer = CommunityVisualizer()
-            visualizer.plot_network_communities(G, best_result)
+            
+            # Set save path if requested
+            save_path = None
+            if save_plots:
+                os.makedirs("plots", exist_ok=True)
+                save_path = f"plots/{network_name}_communities.png"
+                print(f"Saving plot to: {save_path}")
+            
+            visualizer.plot_network_communities(G, best_result, save_path=save_path)
 
 def main():
     """Main function for command line interface"""
@@ -776,6 +855,8 @@ def main():
                        help='Run analysis on all available networks')
     parser.add_argument('--no-viz', action='store_true',
                        help='Disable visualization')
+    parser.add_argument('--save-plots', action='store_true',
+                       help='Save visualization plots to files in plots/ directory')
     
     args = parser.parse_args()
     
@@ -793,10 +874,10 @@ def main():
             print(f"\n{'='*60}")
             print(f"ANALYZING NETWORK: {network_name}")
             print(f"{'='*60}")
-            app.run_full_analysis(network_name, visualize=not args.no_viz)
+            app.run_full_analysis(network_name, visualize=not args.no_viz, save_plots=args.save_plots)
     
     elif args.network:
-        app.run_full_analysis(args.network, visualize=not args.no_viz)
+        app.run_full_analysis(args.network, visualize=not args.no_viz, save_plots=args.save_plots)
     
     else:
         # Interactive mode
@@ -819,7 +900,11 @@ def main():
             else:
                 network_name = choice
             
-            app.run_full_analysis(network_name, visualize=not args.no_viz)
+            # Ask about saving plots in interactive mode
+            save_choice = input("Save plots to files? (y/N): ").strip().lower()
+            save_plots = save_choice in ['y', 'yes']
+            
+            app.run_full_analysis(network_name, visualize=not args.no_viz, save_plots=save_plots)
             
         except KeyboardInterrupt:
             print("\nExiting...")

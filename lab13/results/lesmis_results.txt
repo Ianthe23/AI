@@ -2,25 +2,26 @@ Community Detection Results for lesmis
 ============================================================
 
 Algorithm: Louvain
-Number of communities: 6
-Modularity: 0.560008
-Execution time: 0.001657 seconds
+Number of communities: 7
+Modularity: 0.555537
+Execution time: 0.001828 seconds
 Parameters: {}
 
 Community assignments:
 Community 0: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-Community 1: [10, 11, 13, 14, 15, 28, 29, 32, 33, 34, 35, 36, 37, 38, 44, 45]
-Community 2: [12, 16, 17, 18, 19, 20, 21, 22, 23, 30, 31]
+Community 1: [10, 11, 12, 13, 14, 15, 28, 29, 32, 33, 34, 35, 36, 37, 38, 44, 45]
+Community 2: [16, 17, 18, 19, 20, 21, 22, 23, 30, 31]
 Community 3: [24, 25, 27, 40, 41, 42, 68, 69, 70, 71, 75]
-Community 4: [26, 39, 43, 49, 50, 51, 52, 53, 54, 55, 56, 72]
-Community 5: [46, 47, 48, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 73, 74, 76]
+Community 4: [26, 39, 43, 49, 50, 51, 52, 53, 54, 56, 72]
+Community 5: [46, 47]
+Community 6: [48, 55, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 73, 74, 76]
 
 ----------------------------------------
 
 Algorithm: Greedy Modularity
 Number of communities: 5
 Modularity: 0.500597
-Execution time: 0.005485 seconds
+Execution time: 0.005114 seconds
 Parameters: {}
 
 Community assignments:
@@ -33,85 +34,88 @@ Community 4: [17, 18, 19, 20, 21, 22]
 ----------------------------------------
 
 Algorithm: Label Propagation
-Number of communities: 10
-Modularity: 0.498659
-Execution time: 0.000601 seconds
+Number of communities: 8
+Modularity: 0.529923
+Execution time: 0.000585 seconds
 Parameters: {}
 
 Community assignments:
-Community 0: [0, 1, 4, 5, 6, 7, 8, 9]
-Community 1: [2, 3]
-Community 2: [10, 11, 12, 13, 14, 15, 23, 24, 25, 26, 27, 30, 31, 32, 33, 40, 41, 42, 43, 49, 50, 51, 53, 54, 56, 68, 69, 70, 71, 72, 75]
-Community 3: [16, 17, 18, 19, 20, 21, 22]
-Community 4: [28, 45, 44]
-Community 5: [34, 35, 36, 37, 38, 29]
-Community 6: [52, 39]
-Community 7: [46, 47]
-Community 8: [64, 65, 66, 67, 76, 48, 55, 57, 58, 59, 60, 61, 62, 63]
-Community 9: [73, 74]
+Community 0: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Community 1: [32, 34, 35, 36, 37, 38, 10, 11, 12, 13, 14, 15, 44, 45, 28, 29]
+Community 2: [16, 17, 18, 19, 20, 21, 22, 23]
+Community 3: [33, 68, 69, 70, 71, 40, 41, 42, 43, 72, 75, 50, 24, 25, 26, 27]
+Community 4: [30, 31]
+Community 5: [39, 48, 49, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 76]
+Community 6: [46, 47]
+Community 7: [73, 74]
 
 ----------------------------------------
 
 Algorithm: Genetic Algorithm (modularity)
-Number of communities: 22
-Modularity: 0.250442
-Execution time: 2.732655 seconds
+Number of communities: 26
+Modularity: 0.251713
+Execution time: 2.760545 seconds
 Parameters: {'population_size': 100, 'generations': 200, 'mutation_rate': 0.1, 'crossover_rate': 0.8, 'fitness_function': 'modularity'}
 
 Community assignments:
-Community 0: [0]
-Community 1: [1, 13, 38, 72]
-Community 2: [2, 11, 28, 44]
-Community 3: [3]
-Community 4: [4, 9, 34, 35, 42]
-Community 5: [5, 45, 47, 50, 54]
-Community 6: [6]
-Community 7: [7, 53]
-Community 8: [8]
-Community 9: [10, 30, 36]
-Community 10: [12, 16, 23, 43]
-Community 11: [14, 37]
-Community 12: [15, 31, 40]
-Community 13: [17, 32, 74]
-Community 14: [18, 21]
-Community 15: [19, 20, 76]
-Community 16: [22, 26, 51, 52]
-Community 17: [24, 25, 27, 41, 68, 69, 70, 71, 75]
-Community 18: [29, 39, 56]
-Community 19: [33, 73]
-Community 20: [46, 48, 49, 55, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66]
-Community 21: [67]
+Community 0: [0, 1]
+Community 1: [2, 3, 7, 49]
+Community 2: [4, 17, 51, 52]
+Community 3: [5, 10]
+Community 4: [6, 15, 26]
+Community 5: [8, 54]
+Community 6: [9, 11, 33]
+Community 7: [12, 34, 56]
+Community 8: [13, 37, 47, 72]
+Community 9: [14]
+Community 10: [16, 18, 19, 21, 23, 30, 31, 46]
+Community 11: [20, 53]
+Community 12: [22]
+Community 13: [24, 25, 41, 68, 70, 71]
+Community 14: [27, 29, 32, 36, 40, 44]
+Community 15: [28]
+Community 16: [35, 50]
+Community 17: [38]
+Community 18: [39]
+Community 19: [42]
+Community 20: [43, 75]
+Community 21: [45, 73]
+Community 22: [48, 55, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 76]
+Community 23: [67]
+Community 24: [69]
+Community 25: [74]
 
 ----------------------------------------
 
 Algorithm: Genetic Algorithm (conductance)
-Number of communities: 21
-Modularity: 0.078849
-Execution time: 11.171173 seconds
+Number of communities: 22
+Modularity: 0.058017
+Execution time: 11.247967 seconds
 Parameters: {'population_size': 100, 'generations': 200, 'mutation_rate': 0.1, 'crossover_rate': 0.8, 'fitness_function': 'conductance'}
 
 Community assignments:
-Community 0: [0, 3, 4, 6, 50]
-Community 1: [1, 8, 12, 13, 26, 43, 51, 54, 60, 72]
-Community 2: [2, 58, 71]
-Community 3: [5, 23, 27, 33, 61]
-Community 4: [7, 48]
-Community 5: [9, 31, 35, 36, 37, 38]
-Community 6: [10, 15, 49, 56, 76]
-Community 7: [11, 28, 40, 70]
-Community 8: [14, 53, 57, 59]
-Community 9: [16, 17, 18, 21, 22, 39, 44, 69]
-Community 10: [19, 52]
-Community 11: [20, 25, 67]
-Community 12: [24, 68, 75]
-Community 13: [29, 41, 42]
-Community 14: [30, 32, 45, 62, 64]
-Community 15: [34, 66]
-Community 16: [46, 47]
-Community 17: [55]
-Community 18: [63]
-Community 19: [65]
-Community 20: [73, 74]
+Community 0: [0, 1, 4, 5, 8]
+Community 1: [2, 10, 16, 26, 42, 72]
+Community 2: [3, 36, 43]
+Community 3: [6, 17, 53]
+Community 4: [7, 44]
+Community 5: [9, 24, 68, 71]
+Community 6: [11, 28, 32, 38, 51]
+Community 7: [12, 39, 41, 57]
+Community 8: [13, 34, 52, 60, 61]
+Community 9: [14, 33, 70]
+Community 10: [15, 20, 27, 69]
+Community 11: [18, 19, 22, 54, 67]
+Community 12: [21, 25, 29, 75]
+Community 13: [23, 55, 62]
+Community 14: [30, 31]
+Community 15: [35, 40, 64]
+Community 16: [37, 49, 56]
+Community 17: [45, 58, 59, 63, 66]
+Community 18: [46, 47]
+Community 19: [48, 50]
+Community 20: [65, 76]
+Community 21: [73, 74]
 
 ----------------------------------------
 

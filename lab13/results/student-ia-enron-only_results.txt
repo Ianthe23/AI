@@ -3,25 +3,25 @@ Community Detection Results for student-ia-enron-only
 
 Algorithm: Louvain
 Number of communities: 7
-Modularity: 0.562122
-Execution time: 0.004498 seconds
+Modularity: 0.565585
+Execution time: 0.004163 seconds
 Parameters: {}
 
 Community assignments:
-Community 0: [17, 24, 124, 10, 21, 70, 122, 25, 36, 39, 40, 41, 55, 58, 60, 76, 82, 104, 115, 83, 89, 110, 138]
-Community 1: [1, 72, 22, 5, 16, 64, 105, 78, 91, 53, 14, 50, 68, 73, 107, 38, 111, 140, 123, 30, 44, 134, 35, 119, 125, 142, 45, 118, 143, 63, 135]
+Community 0: [17, 24, 124, 10, 21, 70, 122, 25, 36, 39, 40, 41, 55, 58, 60, 76, 104, 115, 83, 89, 110, 138]
+Community 1: [1, 72, 22, 5, 16, 64, 105, 78, 53, 14, 50, 68, 73, 107, 140, 123, 30, 44, 134, 35, 119, 125, 142, 45, 118, 143, 63, 135]
 Community 2: [3, 2, 19, 20, 27, 29, 31, 48, 65, 67, 69, 71, 132, 136, 4, 28, 54, 18]
 Community 3: [9, 6, 13, 26, 47, 49, 66, 11, 7, 12, 74, 75, 51, 56, 139, 37, 32, 137, 59, 131, 97]
 Community 4: [112, 8, 43, 61, 95, 101, 121, 103, 77, 100, 52, 90, 99, 109, 117, 46, 108, 94, 57, 102, 62, 79, 114, 80, 88, 93]
-Community 5: [85, 15, 128, 126, 141, 130, 86, 84, 127, 113, 129, 133, 92, 96, 98]
-Community 6: [33, 23, 87, 120, 34, 81, 42, 116, 106]
+Community 5: [91, 82, 38, 111, 33, 23, 87, 120, 34, 81, 42, 116, 106]
+Community 6: [85, 15, 128, 126, 141, 130, 86, 84, 127, 113, 129, 133, 92, 96, 98]
 
 ----------------------------------------
 
 Algorithm: Greedy Modularity
 Number of communities: 5
 Modularity: 0.512581
-Execution time: 0.013808 seconds
+Execution time: 0.013391 seconds
 Parameters: {}
 
 Community assignments:
@@ -34,116 +34,120 @@ Community 4: [65, 2, 67, 132, 3, 4, 69, 71, 136, 18, 19, 20, 27, 28, 29, 31, 54]
 ----------------------------------------
 
 Algorithm: Label Propagation
-Number of communities: 9
-Modularity: 0.502589
-Execution time: 0.001055 seconds
+Number of communities: 12
+Modularity: 0.487066
+Execution time: 0.001132 seconds
 Parameters: {}
 
 Community assignments:
-Community 0: [121, 36, 70, 39, 40, 41, 104, 79, 17, 115, 55, 24, 25, 58, 60]
-Community 1: [1, 2, 3, 132, 4, 5, 136, 18, 19, 20, 27, 28, 29, 31, 48, 54, 65, 67, 69, 71, 72]
-Community 2: [128, 8, 10, 138, 14, 142, 16, 143, 21, 22, 30, 35, 38, 43, 44, 45, 46, 50, 52, 53, 57, 61, 62, 63, 64, 68, 73, 76, 77, 78, 80, 82, 83, 88, 89, 90, 91, 93, 95, 99, 100, 101, 102, 103, 105, 107, 108, 109, 110, 111, 112, 114, 117, 118, 119, 122, 123, 124, 125]
-Community 3: [131, 6, 7, 9, 137, 11, 12, 13, 139, 26, 32, 37, 47, 49, 51, 56, 59, 66, 74, 75, 94, 97]
-Community 4: [96, 129, 130, 98, 133, 141, 15, 113, 84, 85, 86, 92, 126, 127]
-Community 5: [140, 134, 135]
-Community 6: [120, 33, 34, 23]
-Community 7: [106, 116, 87]
-Community 8: [81, 42]
+Community 0: [8, 10, 138, 17, 21, 24, 25, 36, 39, 40, 41, 55, 58, 60, 70, 76, 83, 89, 104, 110, 115, 122, 124]
+Community 1: [1, 5, 14, 142, 16, 143, 22, 30, 35, 38, 44, 45, 50, 52, 53, 63, 64, 68, 72, 73, 78, 91, 97, 105, 107, 111, 118, 119, 123, 125]
+Community 2: [2, 3, 132, 4, 6, 131, 136, 9, 139, 13, 18, 19, 20, 26, 27, 28, 29, 31, 47, 48, 49, 51, 54, 65, 66, 67, 69, 71]
+Community 3: [32, 37, 7, 137, 74, 75, 11, 12, 56, 59]
+Community 4: [106, 108, 46, 112, 80, 82, 116, 87, 88, 62, 95]
+Community 5: [128, 129, 130, 96, 98, 133, 15, 85, 126]
+Community 6: [99, 100, 101, 103, 43, 77, 109, 93, 117, 90, 61]
+Community 7: [102, 79, 114, 121, 94, 57]
+Community 8: [140, 134, 135]
+Community 9: [120, 33, 34, 23]
+Community 10: [141, 113, 84, 86, 92, 127]
+Community 11: [81, 42]
 
 ----------------------------------------
 
 Algorithm: Genetic Algorithm (modularity)
-Number of communities: 48
-Modularity: 0.137032
-Execution time: 5.675804 seconds
+Number of communities: 50
+Modularity: 0.081363
+Execution time: 5.668860 seconds
 Parameters: {'population_size': 100, 'generations': 200, 'mutation_rate': 0.1, 'crossover_rate': 0.8, 'fitness_function': 'modularity'}
 
 Community assignments:
-Community 0: [17, 43, 35, 57]
-Community 1: [1, 130]
-Community 2: [72, 9, 49]
-Community 3: [3, 2, 19, 20, 27, 29, 31, 65, 67, 69, 71, 132, 136, 4, 54, 18]
-Community 4: [48, 81, 96]
-Community 5: [28, 6]
-Community 6: [22, 38]
-Community 7: [5]
-Community 8: [13, 47, 66, 74, 56, 32, 90]
-Community 9: [16, 92]
-Community 10: [26, 25, 76, 33, 99, 102, 97]
-Community 11: [64, 40, 95, 121, 46]
-Community 12: [105, 137, 104]
-Community 13: [11, 12, 8, 101, 111]
-Community 14: [7, 53, 34]
-Community 15: [24, 140, 143, 113]
-Community 16: [75, 119, 79, 93]
-Community 17: [112]
-Community 18: [124, 126, 87, 125]
-Community 19: [51, 39, 84]
-Community 20: [78, 123, 142, 118, 110]
-Community 21: [91, 21, 82, 120, 77]
-Community 22: [139, 50]
-Community 23: [10, 70, 100, 117]
-Community 24: [37, 115, 59]
-Community 25: [122, 55]
-Community 26: [14, 68]
-Community 27: [73]
-Community 28: [85, 138]
-Community 29: [15, 36, 134]
-Community 30: [107, 109, 116]
-Community 31: [41, 44, 52, 106]
-Community 32: [58]
-Community 33: [60, 23]
-Community 34: [61, 135, 98]
-Community 35: [128, 89]
-Community 36: [83, 86, 133]
-Community 37: [30]
-Community 38: [103, 42, 63]
-Community 39: [141, 129]
-Community 40: [45, 108]
-Community 41: [131]
-Community 42: [94]
-Community 43: [62]
-Community 44: [114]
-Community 45: [80]
-Community 46: [127]
-Community 47: [88]
+Community 0: [17, 42]
+Community 1: [1, 64, 60, 33]
+Community 2: [72]
+Community 3: [3, 71, 111]
+Community 4: [2, 67, 120]
+Community 5: [19, 65, 134]
+Community 6: [20, 29]
+Community 7: [27, 73]
+Community 8: [31]
+Community 9: [48, 105, 123, 44, 103, 117, 142, 45, 108]
+Community 10: [69, 24, 82, 101, 30, 89]
+Community 11: [132]
+Community 12: [136, 21, 99]
+Community 13: [4, 98]
+Community 14: [28, 128, 79, 97, 80]
+Community 15: [54, 85, 18, 88, 110, 138]
+Community 16: [22, 46, 86]
+Community 17: [5, 50, 95]
+Community 18: [9, 6, 13, 26, 47, 49, 66, 11, 12, 75, 51, 56, 139, 32, 137, 131]
+Community 19: [16]
+Community 20: [7]
+Community 21: [74, 61, 76]
+Community 22: [112]
+Community 23: [8, 124, 10, 37, 93]
+Community 24: [78]
+Community 25: [91]
+Community 26: [53, 14, 83, 143, 63, 127]
+Community 27: [70, 126]
+Community 28: [122, 40, 41, 43, 104]
+Community 29: [68, 55]
+Community 30: [15]
+Community 31: [107, 141, 119, 102, 114]
+Community 32: [25, 90, 130]
+Community 33: [36, 106]
+Community 34: [39, 77]
+Community 35: [58, 23, 57, 133]
+Community 36: [115, 100, 59]
+Community 37: [121, 87, 52, 62]
+Community 38: [38, 92]
+Community 39: [140]
+Community 40: [34]
+Community 41: [81, 125]
+Community 42: [35]
+Community 43: [109]
+Community 44: [118]
+Community 45: [94]
+Community 46: [135, 116, 113]
+Community 47: [84]
+Community 48: [129]
+Community 49: [96]
 
 ----------------------------------------
 
 Algorithm: Genetic Algorithm (conductance)
-Number of communities: 27
-Modularity: 0.039665
-Execution time: 37.496978 seconds
+Number of communities: 26
+Modularity: 0.010763
+Execution time: 37.573441 seconds
 Parameters: {'population_size': 100, 'generations': 200, 'mutation_rate': 0.1, 'crossover_rate': 0.8, 'fitness_function': 'conductance'}
 
 Community assignments:
-Community 0: [17, 67, 5, 15, 25, 61, 76, 140]
-Community 1: [1, 3, 2, 11, 24, 85, 58, 126, 89, 102, 129]
-Community 2: [72, 19, 26, 64, 53, 123, 135, 92]
-Community 3: [20, 12, 21, 107, 142, 84]
-Community 4: [27, 4, 16, 88]
-Community 5: [29, 13, 78]
-Community 6: [31, 48, 132, 136, 70, 119, 138]
-Community 7: [65, 71, 54, 43, 30, 44, 81, 109, 114, 93]
-Community 8: [69, 28, 47, 112, 56, 104, 42, 143, 62, 110]
-Community 9: [22, 105, 73, 40, 99, 79]
-Community 10: [9, 6, 49, 66, 91, 139, 83, 111, 23, 106]
-Community 11: [7, 124, 51, 115]
-Community 12: [74, 10, 37, 32, 36, 127]
-Community 13: [75, 122, 82, 18, 117]
-Community 14: [8, 137, 57]
-Community 15: [14, 50, 60, 59, 46, 131, 130]
-Community 16: [68, 55, 134, 52, 113]
-Community 17: [39, 80]
-Community 18: [41, 95, 38, 103, 100, 94]
-Community 19: [101, 35, 77, 45, 96]
-Community 20: [121, 90]
-Community 21: [128, 118, 108]
-Community 22: [33, 125, 98]
-Community 23: [87, 116]
-Community 24: [120, 34, 63]
-Community 25: [141, 133]
-Community 26: [97, 86]
+Community 0: [17, 1, 6, 91, 15, 104, 140, 79, 86, 129, 96]
+Community 1: [72, 66, 41, 80]
+Community 2: [3, 51, 60, 61, 121, 87, 134, 100]
+Community 3: [2, 29, 32, 14, 115]
+Community 4: [19, 48, 8, 36, 40, 99]
+Community 5: [20, 28, 22, 53, 43, 111, 59, 118, 143, 116]
+Community 6: [27, 112, 83, 141, 97, 92]
+Community 7: [31, 132, 24, 137, 50, 73, 57, 84, 98, 138]
+Community 8: [65, 4, 78, 126, 77, 46]
+Community 9: [67, 64, 74, 90]
+Community 10: [69, 136, 12, 21, 18, 23, 35, 130, 127]
+Community 11: [71, 26, 124, 109, 135]
+Community 12: [54, 11, 37, 85, 76]
+Community 13: [5, 56, 39, 58, 131, 114, 113, 93]
+Community 14: [9, 16, 47, 70, 34, 133]
+Community 15: [13, 49, 38]
+Community 16: [105, 139, 128, 103, 45, 94, 110]
+Community 17: [7, 25, 30]
+Community 18: [75, 82, 95, 101, 89, 142, 108, 62]
+Community 19: [10, 44, 119, 52, 88]
+Community 20: [122, 33, 102]
+Community 21: [68, 123]
+Community 22: [107, 125, 63]
+Community 23: [55, 117]
+Community 24: [120, 106]
+Community 25: [81, 42]
 
 ----------------------------------------
 
