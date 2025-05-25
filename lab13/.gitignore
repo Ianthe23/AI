@@ -61,7 +61,6 @@ profile_default/
 ipython_config.py
 
 # Results and outputs
-*.png
 *.pdf
 *.svg
 *.eps
