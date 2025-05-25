@@ -20,7 +20,8 @@ The application addresses the problem of identifying communities in complex netw
 
 ## Features
 
-- **Network Loading**: Supports GML format networks
+- **Network Loading**: Supports multiple formats (GML, MTX, TXT)
+- **Multiple Data Sources**: Real networks, professor datasets, and student datasets
 - **Multiple Algorithms**: Compare predefined vs. evolutionary approaches
 - **Performance Metrics**: Modularity, execution time, number of communities
 - **Visualization**: Network plots with community highlighting
@@ -49,11 +50,18 @@ The application works with the following datasets:
 - **netscience**: Collaboration network of network scientists (1589 nodes)
 - **lesmis**: Characters in Les Misérables (77 nodes)
 
+### Student Networks (from `data/data-student/`):
+- **student-brock200-1**: Student dataset in MTX format
+- **student-ia-enron-only**: Student dataset in MTX format  
+- **student-delaunay_n10**: Student dataset in MTX format
+
+> **Note**: Student networks are automatically prefixed with `student-` to distinguish them from other datasets.
+
 ## Usage
 
 ### Command Line Interface
 
-1. **List available networks**:
+1. **List available networks** (including student datasets):
    ```bash
    python community_detection_app.py --list-networks
    ```
@@ -63,12 +71,17 @@ The application works with the following datasets:
    python community_detection_app.py --network karate
    ```
 
-3. **Run analysis on all networks**:
+3. **Analyze student datasets**:
+   ```bash
+   python community_detection_app.py --network student-ia-enron-only
+   ```
+
+4. **Run analysis on all networks**:
    ```bash
    python community_detection_app.py --all
    ```
 
-4. **Disable visualization** (for large networks):
+5. **Disable visualization** (for large networks):
    ```bash
    python community_detection_app.py --network netscience --no-viz
    ```
@@ -196,7 +209,11 @@ Genetic Algorithm         4             0.4156       12.3456
 
 ### Key Classes
 
-- `NetworkLoader`: Handles GML file loading and network discovery
+- `NetworkLoader`: Handles multi-format file loading and network discovery
+  - `load_gml()`: GML format support
+  - `load_mtx()`: MTX (Matrix Market) format support  
+  - `load_edgelist()`: TXT edge list format support
+  - `get_available_networks()`: Auto-discovery of all network files
 - `PredefinedAlgorithms`: Implements library-based community detection
 - `GeneticCommunityDetection`: Custom genetic algorithm implementation
 - `CommunityVisualizer`: Network visualization utilities
@@ -229,3 +246,51 @@ Genetic Algorithm         4             0.4156       12.3456
 ## License
 
 This project is developed for educational purposes as part of AI Lab 10 - Community Detection assignment. 
+
+## Supported File Formats
+
+The application supports multiple network file formats:
+
+### GML (Graph Modeling Language)
+- Standard format for the real and professor networks
+- Contains node and edge definitions with attributes
+- Example: `data/real/karate/karate.gml`
+
+### MTX (Matrix Market Format)
+- Sparse matrix format commonly used for large networks
+- Header format: `%MatrixMarket matrix coordinate pattern symmetric`
+- Contains dimensions line followed by edge list
+- Example: `data/data-student/ia-enron-only.mtx`
+
+### TXT (Edge List)
+- Simple text format with space/tab separated node pairs
+- Each line represents an edge: `node1 node2`
+- Example: `data/data-professor/com-dblp.ungraph.txt`
+
+## Data Directory Structure
+
+```
+data/
+├── real/                    # Real-world networks (GML format)
+│   ├── karate/
+│   ├── dolphins/
+│   ├── football/
+│   └── krebs/
+├── data-professor/          # Professor-provided datasets (GML/TXT)
+│   ├── netscience.gml
+│   ├── lesmis.gml
+│   └── com-dblp.ungraph.txt
+└── data-student/           # Student datasets (MTX/GML/TXT)
+    ├── brock200-1.mtx
+    ├── ia-enron-only.mtx
+    └── delaunay_n10.mtx
+```
+
+### Recent Updates
+
+**Version 2.0 Features:**
+- **MTX Format Support**: Added native support for Matrix Market (.mtx) files
+- **Student Dataset Integration**: Automatic discovery of datasets in `data/data-student/`
+- **Multi-format Loading**: Unified interface for GML, MTX, and TXT formats
+- **Enhanced Network Discovery**: Automatic detection and categorization of all network files
+- **Improved Error Handling**: Better error messages and fallback parsing for malformed files 
